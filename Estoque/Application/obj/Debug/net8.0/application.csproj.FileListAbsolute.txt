@@ -1,0 +1,11 @@
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\bin\Debug\net8.0\application.deps.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\bin\Debug\net8.0\application.dll
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\bin\Debug\net8.0\application.pdb
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.AssemblyInfoInputs.cache
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.AssemblyInfo.cs
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.csproj.CoreCompileInputs.cache
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.dll
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\refint\application.dll
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\application.pdb
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Application\obj\Debug\net8.0\ref\application.dll
