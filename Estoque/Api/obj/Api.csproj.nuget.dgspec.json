@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\API.csproj": {}
+    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\API.csproj": {
+    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\API.csproj",
+        "projectPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\API.csproj",
         "packagesPath": "C:\\Users\\Danielxpdk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\obj\\",
+        "outputPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Danielxpdk\\AppData\\Roaming\\NuGet\\NuGet.Config"

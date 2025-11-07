@@ -1,31 +1,52 @@
 using Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure;
+
+/*
+* ASP.NET Core Web API application setup micro serviço Estoque .
+* Configures services, database context, Swagger for API documentation,
+* and a test endpoint to verify database connectivity.
+* Author: Paulo Daniel
+* Date: Novembro de 2025
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
-builder.Services.AddDbContext<EstoqueDBContext>(options =>
+#region builder
+    builder.Services.AddControllers();
+    builder.Services.AddDbContext<EstoqueDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EstoqueConnection")));
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddInfrastructure();
 
-var app = builder.Build();
+    var app = builder.Build();
+#endregion
 
-app.MapGet("/Teste", async (EstoqueDBContext dbContext) =>
-{
-    // Test the database connection
-    try
-    {
-        await dbContext.Database.OpenConnectionAsync();
-        await dbContext.Database.CloseConnectionAsync();
-        return Results.Ok("Database connection successful!");
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem($"Database connection failed: {ex.Message}");
-    }
-});
+#region swagger
+    builder.Services.AddSwaggerGen();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+#endregion
+
+#region TesteDatabaseConnection
+    app.MapGet("/Teste", async (EstoqueDBContext dbContext) =>
+        {
+            // Test the database connection
+            try
+            {
+                await dbContext.Database.OpenConnectionAsync();
+                await dbContext.Database.CloseConnectionAsync();
+                return Results.Ok("Database connection successful!");
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"Database connection failed: {ex.Message}");
+            }
+    });
+#endregion
+
+app.MapControllers();
+
 
 app.Run();
 

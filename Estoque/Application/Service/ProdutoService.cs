@@ -39,16 +39,17 @@ namespace Application.Service
 
         public Produto? FindById(Guid id)
         {
-            if (_produtoRepository.FindById(id) == null)
-                throw new ProdutoNaoEncontradoException();
+            var produtoExistente = _produtoRepository.FindById(id);
+            if (produtoExistente == null)
+                throw new ProdutoNaoEncontradoException(id);
 
-            return _produtoRepository.FindById(id);
+            return produtoExistente;
         }
     public void UpdateQuantity(Guid id, int quantidadeVendida)
     {
         var produtoExistente = _produtoRepository.FindById(id);
             if (produtoExistente == null)
-                throw new ProdutoNaoEncontradoException();
+                throw new ProdutoNaoEncontradoException(id);
 
             if (produtoExistente.Quantidade < 0)
                 throw new QuantidadeInvalidaException(produtoExistente.Quantidade);
