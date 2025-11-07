@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y73SDBaIFmDSn7EzEaYQmdUcJl1CvrYQvOM4PtrxIWFucheN+PjCGuQ1EBgcXl48V0swc1FGsWpw6r92t6ChUA==",
+  "dgSpecHash": "fgimmF/l/KNWiRArbuYo9Sb6ZGTW9pPJdBBqDwMU+Y4xpMYMzsqQj+cWhB19dC+3ZdFYPTOcMQ9nLryfij9BTQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\api\\API.csproj",
+  "projectFilePath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Estoque\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Danielxpdk\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Danielxpdk\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

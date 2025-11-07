@@ -19,11 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddInfrastructure();
 
+    builder.Services.AddSwaggerGen();
     var app = builder.Build();
 #endregion
 
 #region swagger
-    builder.Services.AddSwaggerGen();
     app.UseSwagger();
     app.UseSwaggerUI();
 #endregion

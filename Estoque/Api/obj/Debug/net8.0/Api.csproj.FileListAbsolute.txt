@@ -139,13 +139,7 @@ C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\API.sourcelink.json
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets.development.json
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets\msbuild.build.API.props
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.API.props
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.API.props
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\scopedcss\bundle\API.styles.css
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\API.csproj.CopyComplete
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\API.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\refint\API.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\api\obj\Debug\net8.0\API.pdb
@@ -175,3 +169,12 @@ C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\api\bin\Debug
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\api\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\api\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\api\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\bin\Debug\net8.0\API.staticwebassets.endpoints.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\API\obj\Debug\net8.0\API.csproj.Up2Date

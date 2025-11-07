@@ -1,0 +1,12 @@
+#.Net
+bin/
+obj/
+out/
+*.user
+*.suo
+*.cache
+*.docstates
+
+
+.vs/
+.fake

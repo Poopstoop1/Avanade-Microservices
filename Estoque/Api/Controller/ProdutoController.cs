@@ -26,14 +26,7 @@ namespace API.Controller
         [HttpGet]
         public ActionResult<List<ProdutoDTO>> GetAllProducts()
         {
-            var produtos = _produtoService.FindAll()
-                .Select(p => new ProdutoDTO
-                {
-                    Nome = p.Nome,
-                    Descricao = p.Descricao,
-                    Preco = p.Preco.Valor,
-                    Quantidade = p.Quantidade
-                }).ToList();
+            var produtos = _produtoService.FindAll();
 
             return Ok(produtos);
         }
