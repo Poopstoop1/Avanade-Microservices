@@ -12,7 +12,7 @@ namespace Domain.Entities
         public Guid PedidoId { get; set; }
         public Pedido Pedido { get; set; } = default!;
 
-        public Guid ProdutoId { get; set; } // ID do produto no microserviço de Estoque
+        public Guid ProdutoId { get; set; }
         public string NomeProduto { get; set; } = string.Empty;
 
         public int Quantidade { get; set; }

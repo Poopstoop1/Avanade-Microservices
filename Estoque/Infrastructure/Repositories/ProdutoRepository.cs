@@ -2,57 +2,60 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.Interfaces;
 using Domain.Entities;
 using Domain.IRepository;
 using Infrastructure.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
   public class ProdutoRepository : IProdutoRepository
   {
-    private readonly EstoqueDBContext _context;
+        private readonly EstoqueDBContext _context;
 
-     public ProdutoRepository(EstoqueDBContext context)
+        public ProdutoRepository(EstoqueDBContext context)
         {
             _context = context;
         }
 
-        public List<Produto> FindAll()
+        public async Task AddAsync(Produto produto, CancellationToken cancellationToken = default)
         {
-            return _context.Produtos.ToList();
+            
+            await _context.Produtos.AddAsync(produto, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
         }
 
-        public Produto? FindById(Guid id)
+        public async Task Delete(Produto produto, CancellationToken cancellationToken = default)
         {
-            return _context.Produtos.FirstOrDefault(p => p.Id == id);
+               _context.Produtos.Remove(produto);
+                await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public Produto Save(Produto produto)
+        public async Task<List<Produto>> GetAllAsync(CancellationToken cancellationToken = default!)
         {
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
-            return produto;
+            return await _context.Produtos.ToListAsync(cancellationToken);
         }
 
-        public void Update(Produto produto)
+        public async Task<Produto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            _context.Produtos.Update(produto);
-            _context.SaveChanges();
+              return await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 
-        public Produto? Delete(Guid id)
+        public async Task Update(Produto produto, CancellationToken cancellationToken = default)
         {
-            var produto = _context.Produtos.FirstOrDefault(p => p.Id == id);
-            if (produto == null) return null;
+            var produtoExistente = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == produto.Id, cancellationToken);
+            if (produtoExistente == null)
+                throw new KeyNotFoundException($"Produto com ID {produto.Id} não encontrado.");
 
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
+            produtoExistente.Nome = produto.Nome;
+            produtoExistente.Descricao = produto.Descricao;
+            produtoExistente.Preco = produto.Preco;
+            produtoExistente.Quantidade = produto.Quantidade;
 
-            return produto;
+            await _context.SaveChangesAsync(cancellationToken);
         }
-
-  }
+    }
   
   
 }

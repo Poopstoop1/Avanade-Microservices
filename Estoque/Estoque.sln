@@ -11,15 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{5F3448DE-D563-4650-A181-F4ADA59BABB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vendas", "..\Vendas\Api\Vendas.csproj", "{F17BF641-FA92-4F79-9F75-39FB67D4B65D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8538817D-F3AD-4F40-8F6E-52328D9DCF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -38,9 +33,8 @@ Global
 		{5F3448DE-D563-4650-A181-F4ADA59BABB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3448DE-D563-4650-A181-F4ADA59BABB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3448DE-D563-4650-A181-F4ADA59BABB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F17BF641-FA92-4F79-9F75-39FB67D4B65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F17BF641-FA92-4F79-9F75-39FB67D4B65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F17BF641-FA92-4F79-9F75-39FB67D4B65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F17BF641-FA92-4F79-9F75-39FB67D4B65D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
+using API;
 using Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure;
 
 /*
 * ASP.NET Core Web API application setup micro serviço Estoque .
@@ -12,24 +12,17 @@ using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region builder
-    builder.Services.AddControllers();
-    builder.Services.AddDbContext<EstoqueDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EstoqueConnection")));
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddInfrastructure();
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
-    builder.Services.AddSwaggerGen();
-    var app = builder.Build();
-#endregion
+var app = builder.Build();
 
-#region swagger
-    app.UseSwagger();
-    app.UseSwaggerUI();
-#endregion
+
+startup.Configure(app, app.Environment);
+
 
 #region TesteDatabaseConnection
-    app.MapGet("/Teste", async (EstoqueDBContext dbContext) =>
+app.MapGet("/Teste", async (EstoqueDBContext dbContext) =>
         {
             // Test the database connection
             try
@@ -42,10 +35,8 @@ var builder = WebApplication.CreateBuilder(args);
             {
                 return Results.Problem($"Database connection failed: {ex.Message}");
             }
-    });
+        }).WithTags("DatabaseTeste").WithDescription("Endpoint para testar o Banco de Dados");
 #endregion
-
-app.MapControllers();
 
 
 app.Run();

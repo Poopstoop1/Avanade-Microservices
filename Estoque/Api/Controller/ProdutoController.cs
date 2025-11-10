@@ -1,114 +1,125 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.DTOs;
-using Application.Interfaces;
-using Domain.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
+using MediatR;
+using Application.Query;
+using Application.Command;
 
 namespace API.Controller
 {
     [ApiController]
     [Route("api/produtos")]
     public class ProdutoController : ControllerBase
-    { 
-        private readonly IProdutoService _produtoService;
+    {
+        private readonly IMediator _mediator;
 
-        public ProdutoController(IProdutoService produtoService)
+        private readonly ILogger<ProdutoController> _logger;
+
+
+        public ProdutoController(IMediator mediator, ILogger<ProdutoController> logger)
         {
-            _produtoService = produtoService;
+            _mediator = mediator;
+            _logger = logger;
         }
 
-        // GET: api/produtos
+        // Query
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(Guid id)
+        {
+            try
+            {
+                var command = new GetProductById(id);
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Produto com Id {Id} não encontrado.", id);
+                return NotFound();
+            }
+                
+        }
         [HttpGet]
-        public ActionResult<List<ProdutoDTO>> GetAllProducts()
-        {
-            var produtos = _produtoService.FindAll();
-
-            return Ok(produtos);
-        }
-
-        // GET: api/produtos/{id}
-        [HttpGet("{id:guid}")]
-        public ActionResult<ProdutoDTO> GetById(Guid id)
+        public async Task<IActionResult> GetAllProducts()
         {
             try
             {
-                var produto = _produtoService.FindById(id);
-                var produtoDTO = new ProdutoDTO
-                {
-                    Nome = produto!.Nome,
-                    Descricao = produto.Descricao,
-                    Preco = produto.Preco.Valor,
-                    Quantidade = produto.Quantidade
-                };
-                return Ok(produtoDTO);
+                var query = new GetAllProducts();
+                var produtos = await _mediator.Send(query);
+                return Ok(produtos);
             }
-            catch (ProdutoNaoEncontradoException ex)
+            catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                _logger.LogError(ex, "Erro ao obter todos os produtos.");
+                return BadRequest(new { message = ex.Message });
             }
+            
         }
+        // Fim da Query
 
-        // POST: api/produtos
+
+        // Command
         [HttpPost]
-        public ActionResult<ProdutoDTO> Create([FromBody] ProdutoDTO produtoDTO)
+        public async Task<IActionResult> AddProduct([FromBody] ProdutoDTO produto)
         {
-            try
-            {
-                var produto = new Produto(
-                    produtoDTO.Nome,
-                    produtoDTO.Descricao,
-                    produtoDTO.Preco,
-                    produtoDTO.Quantidade
-                );
-
-                var novoProduto = _produtoService.Save(produto);
-
-                var novoProdutoDTO = new ProdutoDTO
-                {
-                    Nome = novoProduto.Nome,
-                    Descricao = novoProduto.Descricao,
-                    Preco = novoProduto.Preco.Valor,
-                    Quantidade = novoProduto.Quantidade
-                };
-
-                return CreatedAtAction(nameof(GetById), new { id = novoProduto.Id }, novoProdutoDTO);
+            try {
+                var command = new AddProduct
+               (
+                   produto.Nome,
+                   produto.Descricao,
+                   produto.Preco,
+                   produto.Quantidade
+               );
+                var id = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetProductById), new { id }, new { id });
             }
-            catch (ProdutoJaCadastradoException ex)
+            catch (Exception ex)
             {
-                return Conflict(new { message = ex.Message });
-            }
-            catch (QuantidadeInvalidaException ex)
-            {
+                _logger.LogWarning(ex, "Erro ao criar o Produto");
                 return BadRequest(new { message = ex.Message });
             }
+           
         }
 
-        // PUT: api/produtos/{id}/quantidade
-        [HttpPut("{id:guid}/quantidade")]
-        public IActionResult UpdateQuantity(Guid id, [FromQuery] int quantidadeVendida)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduto(Guid id, [FromBody] ProdutoDTO produto)
         {
+            var command = new UpdateProduct
+            (
+                id,
+                produto.Nome,
+                produto.Descricao,
+                produto.Preco,
+                produto.Quantidade
+            );
             try
             {
-                _produtoService.UpdateQuantity(id, quantidadeVendida);
-                return NoContent();
+                await _mediator.Send(command);
             }
-            catch (ProdutoNaoEncontradoException ex)
+            catch (KeyNotFoundException ex)
             {
-                return NotFound(new { message = ex.Message });
+                _logger.LogWarning(ex, "Produto com Id {Id} não encontrado para atualização.", id);
+                return NotFound();
             }
-            catch (QuantidadeInvalidaException ex)
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduto(Guid id)
+        {
+            var command = new DeleteProduct(id);
+
+            try
             {
-                return BadRequest(new { message = ex.Message });
+                await _mediator.Send(command);
             }
-            catch (EstoqueInsuficienteException ex)
+            catch (KeyNotFoundException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                _logger.LogWarning(ex, "Produto com Id {Id} não encontrado para exclusão.", id);
+                return NotFound();
             }
-        } 
+            return NoContent();
+        }
+        // Fim do Command
+
     }
 }

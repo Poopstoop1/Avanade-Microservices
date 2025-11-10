@@ -12,9 +12,9 @@ C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructur
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CopyComplete
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\estoque\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+c:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Estoque\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -13,9 +12,6 @@ namespace Domain.ValueObjects
 
         public Preco(decimal valor) 
         {
-            if (valor < 0)
-                throw new PrecoNegativoException(valor);
-
             Valor = Math.Round(valor, 2);
         }
     

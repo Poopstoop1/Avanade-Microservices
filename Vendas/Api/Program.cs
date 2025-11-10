@@ -1,6 +1,7 @@
 using Vendas.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Vendas.Infrastructure;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region builder
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<VendasDBContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("VendasConnection")));
+builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 #endregion
 
