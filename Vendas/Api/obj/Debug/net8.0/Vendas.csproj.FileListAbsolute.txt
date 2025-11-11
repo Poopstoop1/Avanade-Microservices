@@ -315,3 +315,4 @@ C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\Api\obj\Debug\
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\Api\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\Api\obj\Debug\net8.0\Vendas.csproj.Up2Date
+C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

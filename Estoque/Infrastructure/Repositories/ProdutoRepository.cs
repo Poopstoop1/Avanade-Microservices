@@ -44,15 +44,7 @@ namespace Infrastructure.Repositories
 
         public async Task Update(Produto produto, CancellationToken cancellationToken = default)
         {
-            var produtoExistente = await _context.Produtos.FirstOrDefaultAsync(p => p.Id == produto.Id, cancellationToken);
-            if (produtoExistente == null)
-                throw new KeyNotFoundException($"Produto com ID {produto.Id} não encontrado.");
-
-            produtoExistente.Nome = produto.Nome;
-            produtoExistente.Descricao = produto.Descricao;
-            produtoExistente.Preco = produto.Preco;
-            produtoExistente.Quantidade = produto.Quantidade;
-
+            _context.Produtos.Update(produto);
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

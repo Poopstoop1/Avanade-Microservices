@@ -1,25 +1,17 @@
-using Vendas.Infrastructure.DB;
-using Microsoft.EntityFrameworkCore;
-using Vendas.Infrastructure;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Vendas;
+using Vendas.Infrastructure.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
-#region builder
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
-#endregion
 
 
-#region swagger
-    app.UseSwagger();
-    app.UseSwaggerUI();
-#endregion
+startup.Configure(app, app.Environment);
 
 
 #region TesteDatabaseConnection
