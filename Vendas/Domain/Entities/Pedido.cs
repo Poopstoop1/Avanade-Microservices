@@ -12,15 +12,15 @@ namespace Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid UsuarioId { get; set; }
+        public Guid UsuarioId { get; private set; }
 
-        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataCriacao { get; private set; } = DateTime.UtcNow;
 
-        public Preco ValorTotal { get; set; } = default!;
+        public Preco ValorTotal { get; private set; } = default!;
 
         public PedidoStatus Status { get; set; } = PedidoStatus.Criado;
 
-        public List<PedidoItem> Itens { get; set; } = new List<PedidoItem>();
+        public List<PedidoItem> Itens { get; private  set; } = new List<PedidoItem>();
 
         public Pedido(Guid usuarioId, List<PedidoItem> itens)
         {

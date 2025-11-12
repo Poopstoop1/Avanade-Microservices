@@ -17,14 +17,23 @@ namespace Application.Query.Handlers
         {
             var produtos = await _pedidoRepository.GetAllAsync(cancellationToken);
 
-            return produtos.Select(p => new PedidoDTO
-            {
-                UsuarioId = p.UsuarioId,
-                DataCriacao = p.DataCriacao,
-                ValorTotal = p.ValorTotal,
-                Status = p.Status,
-                Itens = p.Itens
-            }).ToList();
+            return [
+                ..produtos.Select(p => new PedidoDTO
+                {
+                    UsuarioId = p.UsuarioId,
+                    DataCriacao = p.DataCriacao,
+                    ValorTotal = p.ValorTotal,
+                    Status = p.Status,
+                    Itens = [
+                        ..p.Itens.Select(i => new PedidoItemDTO
+                        {
+                            ProdutoId = i.ProdutoId,
+                            Quantidade = i.Quantidade,
+                            PrecoUnitario = i.PrecoUnitario
+                        })
+                        ],
+                })
+                ];
         }
 
     }

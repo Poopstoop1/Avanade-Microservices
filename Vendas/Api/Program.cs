@@ -1,7 +1,14 @@
-using Infrastructure;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Vendas;
-using Vendas.Infrastructure.DB;
+
+
+/*
+* ASP.NET Core Web API application setup micro serviço Vendas.
+* Author: Paulo Daniel
+* Date: Novembro de 2025
+*/
+
 
 var builder = WebApplication.CreateBuilder(args);
 

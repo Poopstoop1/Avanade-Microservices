@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Vendas.Infrastructure.DB;
+
 
 public class PedidoRepository : IPedidoRepository
 {
@@ -28,18 +28,21 @@ public class PedidoRepository : IPedidoRepository
 
     public async Task<List<Pedido>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _context.Pedidos.ToListAsync(cancellationToken);
+        return await _context.Pedidos.Include(p => p.Itens).ToListAsync(cancellationToken);
     }
 
     public async Task<Pedido?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-       return await _context.Pedidos.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+       return await _context.Pedidos.
+            Include(p => p.Itens).
+            FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
     public async Task<List<Pedido>> GetByStatusAsync(PedidoStatus status, CancellationToken cancellationToken)
     {
         return await _context.Pedidos
             .Where(p => p.Status == status)
+            .Include(p => p.Itens)
             .ToListAsync(cancellationToken);
     }
 

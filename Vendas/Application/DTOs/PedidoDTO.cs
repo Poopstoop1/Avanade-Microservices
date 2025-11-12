@@ -18,7 +18,7 @@ namespace Application.DTOs
 
         public PedidoStatus Status { get; set; } = PedidoStatus.Criado;
 
-        public List<PedidoItem> Itens { get; set; } = new List<PedidoItem>();
+        public List<PedidoItemDTO> Itens { get; set; } = new List<PedidoItemDTO>();
 
     }
 }

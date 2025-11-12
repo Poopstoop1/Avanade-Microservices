@@ -15,7 +15,7 @@ namespace Application.Query.Handlers
 
         public async Task<List<PedidoDTO>> Handle(GetByStatusPedido request, CancellationToken cancellationToken)
         {
-            var pedidos = await _pedidoRepository.GetByStatusAsync(request.status, cancellationToken);
+            var pedidos = await _pedidoRepository.GetByStatusAsync(request.Status, cancellationToken);
 
             return pedidos.Select(p => new PedidoDTO
             {
@@ -23,7 +23,13 @@ namespace Application.Query.Handlers
                 DataCriacao = p.DataCriacao,
                 ValorTotal = p.ValorTotal,
                 Status = p.Status,
-                Itens = p.Itens
+                Itens = p.Itens.Select(i => new PedidoItemDTO
+                {
+                    ProdutoId = i.ProdutoId,
+                    Quantidade = i.Quantidade,
+                    PrecoUnitario = i.PrecoUnitario
+                }).ToList()
+
             }).ToList();
         }
 

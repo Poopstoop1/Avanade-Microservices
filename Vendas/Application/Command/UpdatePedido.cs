@@ -11,15 +11,14 @@ namespace Application.Command
     public class UpdatePedido : IRequest<Unit>
     {
           
-        public UpdatePedido(Guid id, Guid usuarioId, PedidoStatus status)
+        public UpdatePedido(Guid id, PedidoStatus status)
         {
             Id = id;
-            UsuarioId = usuarioId;
+  
             Status = status;
         }
 
         public Guid Id { get; private set; }
-        public Guid UsuarioId { get; private set; }
 
         public PedidoStatus Status { get; set; }
 

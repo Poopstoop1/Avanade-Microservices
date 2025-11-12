@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Domain.Entities;
+using Domain.ValueObjects;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Entities;
 
 namespace Application.Command.Handlers
 {
@@ -19,7 +20,9 @@ namespace Application.Command.Handlers
 
         public async Task<Guid> Handle(AddPedido request, CancellationToken cancellationToken)
         {
-            var pedido = new Pedido(request.UsuarioId, request.Itens);
+            var itens = request.Itens.Select(i => new PedidoItem(i.ProdutoId, i.NomeProduto, i.Quantidade, new Preco(i.PrecoUnitario))).ToList();
+
+            var pedido = new Pedido(request.UsuarioId, itens);
             await _pedidoRepository.AddAsync(pedido,cancellationToken);
             return pedido.Id;
         }

@@ -21,13 +21,19 @@ namespace Application.Query.Handlers
             {
                 throw new KeyNotFoundException($"Pedido com Id {request.Id} não encontrado."); 
             }
+
             return new PedidoDTO
             {
                 UsuarioId = pedido.UsuarioId,
                 DataCriacao = pedido.DataCriacao,
                 ValorTotal = pedido.ValorTotal,
                 Status = pedido.Status,
-                Itens = pedido.Itens
+                Itens = pedido.Itens.Select(i => new PedidoItemDTO
+                {
+                    ProdutoId = i.ProdutoId,
+                    Quantidade = i.Quantidade,
+                    PrecoUnitario = i.PrecoUnitario
+                }).ToList()
             };
         }
 

@@ -12,8 +12,8 @@ namespace Application.Query
     public class GetByStatusPedido : IRequest<List<PedidoDTO>>
     {
 
-        public PedidoStatus status { get; set; }
-        public GetByStatusPedido(PedidoStatus Status)
+        public PedidoStatus Status { get; set; }
+        public GetByStatusPedido(PedidoStatus status)
         {
             Status = status;
         }
