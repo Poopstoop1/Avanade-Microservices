@@ -6,9 +6,9 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public class PedidoItem
+    public class PedidoItem : IEntityBase
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; private set; } = Guid.NewGuid();
         public Guid PedidoId { get; private set; }
         public Pedido? Pedido { get; private set; } = default!;
 

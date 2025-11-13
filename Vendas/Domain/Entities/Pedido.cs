@@ -8,10 +8,8 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public class Pedido
+    public class Pedido : AgreggateRoot
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         public Guid UsuarioId { get; private set; }
 
         public DateTime DataCriacao { get; private set; } = DateTime.UtcNow;
