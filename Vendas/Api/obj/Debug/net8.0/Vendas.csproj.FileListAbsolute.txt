@@ -204,7 +204,6 @@ C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Mono.TextTemplating.dll
-C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\RabbitMQ.Client.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Danielxpdk\Desktop\Projetos\Avanade-Microservices\Vendas\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll

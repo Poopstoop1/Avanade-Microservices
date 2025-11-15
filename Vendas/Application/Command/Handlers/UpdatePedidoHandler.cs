@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿
+using Domain.Enums;
+using MediatR;
 
 
 namespace Application.Command.Handlers
@@ -10,6 +12,7 @@ namespace Application.Command.Handlers
         public UpdatePedidoHandler(IPedidoRepository pedidoRepository)
         {
             _pedidoRepository = pedidoRepository;
+ 
         }
 
         public async Task<Unit> Handle(UpdatePedido request, CancellationToken cancellationToken)
@@ -23,7 +26,15 @@ namespace Application.Command.Handlers
 
             pedido.Status = request.Status;
 
+
+            if (request.Status == PedidoStatus.Confirmado)
+            {
+              
+                pedido.PedidoConfirmado();
+               // await _messageBusClient.Publish(evento, "pedido.confirmado", "pedido_exchange", cancellationToken);
+            }
             await _pedidoRepository.UpdateAsync(pedido, cancellationToken);
+
             return Unit.Value;
         }
     }

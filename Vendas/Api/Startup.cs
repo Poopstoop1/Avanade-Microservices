@@ -27,6 +27,7 @@ namespace Vendas
                 });
             });
             services.AddInfrastructure(Configuration);
+            services.AddMessageBus(Configuration);
             services.AddApplication();
         }
 

@@ -1,6 +1,6 @@
 ﻿
 
-namespace Infrastructure.MessageBus
+namespace Application.Interfaces
 {
     public interface IMessageBusClient
     {

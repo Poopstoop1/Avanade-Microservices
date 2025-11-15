@@ -1,4 +1,5 @@
 using Infrastructure.Data;
+using Infrastructure.MessageBus;
 using Microsoft.EntityFrameworkCore;
 using Vendas;
 
@@ -19,6 +20,7 @@ var app = builder.Build();
 
 
 startup.Configure(app, app.Environment);
+
 
 
 #region TesteDatabaseConnection

@@ -3,7 +3,7 @@ using Infrastructure.MessageBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RabbitMQ.Client;
+using Application.Interfaces;
 
 namespace Infrastructure
 {
@@ -24,7 +24,9 @@ namespace Infrastructure
 
         public static IServiceCollection AddMessageBus(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<IMessageBusClient, RabbitMQClient>();
+            services.AddSingleton<IMessageBusClient>(sp =>
+                 new RabbitMQClient(configuration)
+             );
             return services;
         }
     }

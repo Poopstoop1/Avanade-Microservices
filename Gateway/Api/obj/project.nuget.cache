@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LDmybMyvZCFn3JUVzd9lIP99Bc8wLqJOZ0AXKQzWVf3m9u9LCKeOpK/JGSUllTttXPLB4QSsn/Cqb6rKn/U6nQ==",
+  "dgSpecHash": "kaFOiNU8H9Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\AvanadeMicroServices\\gateway\\api\\Api.csproj",
+  "projectFilePath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Gateway\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Danielxpdk\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\Danielxpdk\\.nuget\\packages\\ipaddressrange\\6.2.0\\ipaddressrange.6.2.0.nupkg.sha512",

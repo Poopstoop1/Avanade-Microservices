@@ -1,5 +1,6 @@
 ﻿
 
+using Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using System.Text;
@@ -12,27 +13,47 @@ namespace Infrastructure.MessageBus
         private readonly IConnection _connection;
         private readonly IChannel _channel;
 
-        private RabbitMQClient(IConnection connection, IChannel channel)
-        {
-            _connection = connection;
-            _channel = channel;
-        }
-
-        public static async Task<RabbitMQClient> CreateAsync(IConfiguration config)
+        public RabbitMQClient(IConfiguration config)
         {
             var factory = new ConnectionFactory()
             {
                 HostName = config["Rabbit:Host"] ?? "localhost"
             };
 
-            var connection = await factory.CreateConnectionAsync("Pedido-Service-Producer");
-            var channel = await connection.CreateChannelAsync();
-
-            return new RabbitMQClient(connection, channel);
+            _connection = factory.CreateConnectionAsync("Pedido-Service-Producer").GetAwaiter().GetResult();
+            _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
         }
 
         public async Task Publish(object message, string routingKey, string exchange, CancellationToken cancellationToken = default)
         {
+            // Declaração do exchange
+            await _channel.ExchangeDeclareAsync(
+                exchange: exchange,
+                type: ExchangeType.Direct,
+                durable: true,
+                autoDelete: false,
+                cancellationToken: cancellationToken
+            );
+
+            // Declaração da fila
+            await _channel.QueueDeclareAsync(
+                 queue: routingKey,
+                 durable: false,
+                 exclusive: false,
+                 autoDelete: false,
+                 arguments: null,
+                 cancellationToken: cancellationToken
+            );
+
+
+            // Vincular Fila ao Exchange
+            await _channel.QueueBindAsync(
+                queue: routingKey,
+                exchange: exchange,
+                routingKey: routingKey,
+                cancellationToken: cancellationToken
+            );
+
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
             var properties = new BasicProperties();
 

@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces;
+using Domain.Entities;
+using Domain.Events;
 using Domain.ValueObjects;
 using MediatR;
 using System;
@@ -16,6 +18,8 @@ namespace Application.Command.Handlers
         public AddPedidoHandler(IPedidoRepository pedidoRepository)
         {
             _pedidoRepository = pedidoRepository;
+
+
         }
 
         public async Task<Guid> Handle(AddPedido request, CancellationToken cancellationToken)
