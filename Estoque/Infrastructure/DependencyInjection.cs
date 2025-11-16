@@ -1,12 +1,13 @@
 
+using Application.Interfaces;
 using Domain.IRepository;
 using Infrastructure.DB;
+using Infrastructure.MessageBus;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
+
 
 namespace Infrastructure
 {
@@ -17,6 +18,14 @@ namespace Infrastructure
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddDbContext<EstoqueDBContext>(options =>
              options.UseSqlServer(configuration.GetConnectionString("EstoqueConnection")));
+            return services;
+        }
+
+        public static IServiceCollection AddMessageBus(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IMessageBusClient>(sp =>
+                 new RabbitMQClient(configuration)
+             );
             return services;
         }
     }

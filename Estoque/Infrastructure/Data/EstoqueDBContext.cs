@@ -11,7 +11,7 @@ namespace Infrastructure.DB
     public class EstoqueDBContext : DbContext
     {
         public EstoqueDBContext(DbContextOptions<EstoqueDBContext> options) : base(options)
-        {
+        {   
         }
 
         public DbSet<Produto> Produtos { get; set; }

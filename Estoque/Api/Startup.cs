@@ -28,6 +28,7 @@ namespace API
                 });
             });
             services.AddInfrastructure(Configuration);
+            services.AddMessageBus(Configuration);
             services.AddApplication();
         }
 
