@@ -9,7 +9,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public class Pedido : AgreggateRoot
+    public class Pedido : AggregateRoot
     {
         public Guid UsuarioId { get; private set; }
 

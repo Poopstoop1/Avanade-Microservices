@@ -80,7 +80,7 @@ namespace Infrastructure.Data
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var domainEntities = ChangeTracker
-                .Entries<AgreggateRoot>()
+                .Entries<AggregateRoot>()
                 .Where(x => x.Entity.DomainEvents.Any())
                 .ToList();
 

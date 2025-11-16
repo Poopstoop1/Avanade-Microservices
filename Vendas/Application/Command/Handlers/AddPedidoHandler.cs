@@ -19,7 +19,6 @@ namespace Application.Command.Handlers
         {
             _pedidoRepository = pedidoRepository;
 
-
         }
 
         public async Task<Guid> Handle(AddPedido request, CancellationToken cancellationToken)

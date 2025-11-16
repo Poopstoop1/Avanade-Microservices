@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Domain.Entities
 {
-    public abstract class AgreggateRoot : IEntityBase
+    public abstract class AggregateRoot : IEntityBase
     {
         public Guid Id { get; protected set; }
 
