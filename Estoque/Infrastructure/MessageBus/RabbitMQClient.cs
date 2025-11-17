@@ -25,11 +25,11 @@ namespace Infrastructure.MessageBus
             _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
         }
 
-        public Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T, Task> handleMessage)
+        public Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T,Task> handleMessage)
         {
 
             // Garantir que exchange exista
-            _channel.ExchangeDeclareAsync(exchange, "fanout", durable: true, autoDelete: false).GetAwaiter().GetResult();
+            _channel.ExchangeDeclareAsync(exchange, "direct", durable: true, autoDelete: false).GetAwaiter().GetResult();
 
             // Criar queue específica para o serviço de Estoque
             _channel.QueueDeclareAsync(queue, durable: true, exclusive: false, autoDelete: false).GetAwaiter().GetResult();
@@ -42,6 +42,7 @@ namespace Infrastructure.MessageBus
 
             consumer.ReceivedAsync += async (model, ea) =>
             {
+                try { 
                 var messageBody = Encoding.UTF8.GetString(ea.Body.ToArray());
                 var messageObj = JsonSerializer.Deserialize<T>(messageBody);
 
@@ -51,11 +52,19 @@ namespace Infrastructure.MessageBus
                     await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
                     return;
                 }
-                // Executa lógica do handler passado
-                await handleMessage(messageObj);
+
+                
+                    // Executa lógica do handler passado
+                    await handleMessage(messageObj);
 
                 // Confirma processamento da mensagem
                 await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao processar mensagem: {ex}");
+                    // Não dê ACK → mensagem ficará na fila (como deve ser)
+                }
             };
 
             // Consumir mensagens da fila

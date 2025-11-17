@@ -2,10 +2,11 @@
 {
     public class PedidoConfirmadoEvent : IDomainEvent
     {
-        public Guid PedidoId { get; }
-        public Guid UsuarioId { get; }
+        public Guid PedidoId { get; set; }
+        public Guid UsuarioId { get; set; }
 
-        public List<PedidoItemDto> Itens { get; }
+        public List<PedidoItemDto> Itens { get; set; } = [];
+
 
         public PedidoConfirmadoEvent(Guid pedidoId, Guid usuarioId, List<PedidoItemDto> itens)
         {
@@ -13,8 +14,10 @@
             UsuarioId = usuarioId;
             Itens = itens;
         }
+        public PedidoConfirmadoEvent() { }
 
-        public class PedidoItemDto
+       
+     public class PedidoItemDto
         {
             public Guid ProdutoId { get; set; }
             public int Quantidade { get; set; }

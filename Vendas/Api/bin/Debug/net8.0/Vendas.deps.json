@@ -990,7 +990,7 @@
       },
       "Domain/1.0.0": {
         "dependencies": {
-          "MediatR": "13.1.0"
+          "MediatR.Contracts": "2.0.1"
         },
         "runtime": {
           "Domain.dll": {

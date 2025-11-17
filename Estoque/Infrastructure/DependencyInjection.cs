@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.IRepository;
 using Infrastructure.DB;
 using Infrastructure.MessageBus;
+using Infrastructure.MessageBus.Consumers;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,8 @@ namespace Infrastructure
             services.AddSingleton<IMessageBusClient>(sp =>
                  new RabbitMQClient(configuration)
              );
+
+            services.AddSingleton<IPedidoConfirmConsumer, PedidoConfirmadoConsumer>();
             return services;
         }
     }

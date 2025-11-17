@@ -1,5 +1,5 @@
 ﻿using Domain.Events;
-using System.Collections;
+
 
 namespace Domain.Entities
 {

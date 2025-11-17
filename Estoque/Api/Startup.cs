@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using API.HostedService;
+using Application;
 using Infrastructure;
 using Microsoft.OpenApi.Models;
 
@@ -29,6 +30,7 @@ namespace API
             });
             services.AddInfrastructure(Configuration);
             services.AddMessageBus(Configuration);
+            services.AddHostedService<RabbitmqHostedService>();
             services.AddApplication();
         }
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\Api\\Vendas.csproj": {}
+    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\api\\Vendas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\Api\\Vendas.csproj": {
+    "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\api\\Vendas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\Api\\Vendas.csproj",
+        "projectUniqueName": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\api\\Vendas.csproj",
         "projectName": "Vendas",
-        "projectPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\Api\\Vendas.csproj",
+        "projectPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\api\\Vendas.csproj",
         "packagesPath": "C:\\Users\\Danielxpdk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\Api\\obj\\",
+        "outputPath": "C:\\Users\\Danielxpdk\\Desktop\\Projetos\\Avanade-Microservices\\Vendas\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

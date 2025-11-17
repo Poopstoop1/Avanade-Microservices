@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public interface IEntity
+    public interface IEntityBase
     {
         Guid Id { get; }
     }

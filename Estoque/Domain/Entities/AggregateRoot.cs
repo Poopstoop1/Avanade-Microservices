@@ -1,9 +1,9 @@
-﻿using Domain.Event;
+﻿using Domain.Events;
 
 
 namespace Domain.Entities
 {
-    public abstract class AggregateRoot : IEntity
+    public abstract class AggregateRoot : IEntityBase
     {
 
         public Guid Id { get; protected set; }
