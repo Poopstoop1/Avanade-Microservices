@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Infrastructure.Data
 {
@@ -9,6 +10,8 @@ namespace Api.Infrastructure.Data
             : base(options)
         {
         }
+
+        public DbSet<Usuario> Usuarios { get; set; } 
 
     }
 }
