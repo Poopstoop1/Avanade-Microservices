@@ -1,8 +1,7 @@
-﻿using System.Text;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
+
+using System.Text;
 
 
 namespace Api
@@ -50,9 +49,14 @@ namespace Api
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
+            services.AddEndpointsApiExplorer();
+            services.AddReverseProxy()
+                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
 
-            services.AddSwaggerForOcelot(Configuration);
-            services.AddOcelot(Configuration);
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -63,26 +67,19 @@ namespace Api
             }
 
             app.UseRouting();
-          
             app.UseAuthentication();
             app.UseAuthorization();
-     
+
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("API Gateway rodando!");
-                });
+                endpoints.MapReverseProxy();
             });
-
-            app.UseSwaggerForOcelotUI(opt =>
-            {
-                opt.PathToSwaggerGenerator = "/swagger/docs";
-            });
-
-
-            // Habilita Ocelot
-            app.UseOcelot().Wait();
         }
     }
 }

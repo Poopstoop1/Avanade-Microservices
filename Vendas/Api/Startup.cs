@@ -21,11 +21,14 @@ namespace Vendas
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Serviço Pedido",
+                    Title = "Serviço Vendas",
                     Version = "v1",
                     Description = "API para gerenciamento de Vendas e Pedidos"
                 });
             });
+        
+
+             services.AddAuthorization();
             services.AddInfrastructure(Configuration);
             services.AddMessageBus(Configuration);
             services.AddApplication();
@@ -38,13 +41,13 @@ namespace Vendas
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Serviço Estoque v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Serviço Vendas v1");
                     c.DocumentTitle = "Serviço Vendas";
                 });
             }
-
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

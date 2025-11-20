@@ -2,11 +2,15 @@ using Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Configuration
-       .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
+
 
 var app = builder.Build();
 
