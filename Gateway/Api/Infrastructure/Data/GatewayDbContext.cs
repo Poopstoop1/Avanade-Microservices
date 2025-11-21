@@ -11,7 +11,19 @@ namespace Api.Infrastructure.Data
         {
         }
 
-        public DbSet<Usuario> Usuarios { get; set; } 
+        public DbSet<Usuario> Usuarios { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.Property(u => u.Name).IsRequired().HasMaxLength(200);
+                entity.Property(u => u.Email).IsRequired().HasMaxLength(200);
+                entity.Property(u => u.PasswordHash).IsRequired();
+                entity.Property(u => u.Role).IsRequired().HasMaxLength(50);
+            });
+        }
 
     }
 }
