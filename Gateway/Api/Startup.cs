@@ -1,5 +1,9 @@
-﻿using Api.Infrastructure.Data;
+﻿using Api.Entities;
+using Api.Infrastructure.Data;
+using Api.Infrastructure.Repositories;
+using Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -55,6 +59,9 @@ namespace Api
                 .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
              services.AddDbContext<GatewayDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("GatewayConnection")));
+
+            services.AddSingleton<IPasswordHasher<Usuario>, PasswordHasher<Usuario>> ();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();

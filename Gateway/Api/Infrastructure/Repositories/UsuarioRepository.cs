@@ -25,13 +25,18 @@ namespace Api.Infrastructure.Repositories
 
         public async Task Delete(Usuario usuario, CancellationToken cancellationToken)
         {
-           _context.Usuarios.Remove(usuario);
+            _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<List<Usuario>> GetAllUsuarioAsync(CancellationToken cancellationToken)
         {
             return await _context.Usuarios.ToListAsync(cancellationToken);
+        }
+
+        public async Task<Usuario?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
     }
 }
