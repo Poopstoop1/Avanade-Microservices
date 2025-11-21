@@ -13,7 +13,7 @@ namespace Api.Services
             _passwordHasher = passwordHasher;
             _repo = repo;
         }
-        public async Task Register(string name, string email, string role, string password, CancellationToken cancellationToken)
+        public async Task<Usuario> Register(string name, string email, string role, string password, CancellationToken cancellationToken)
         {
             var user = new Usuario
             {
@@ -23,8 +23,9 @@ namespace Api.Services
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
-
             await _repo.AddSync(user, cancellationToken);
+
+            return user;
         }
 
         public async Task<Usuario?> Login(string email, string password, CancellationToken cancellationToken)

@@ -2,11 +2,12 @@
 using Api.Infrastructure.Data;
 using Api.Infrastructure.Repositories;
 using Api.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+
 
 
 namespace Api
@@ -23,49 +24,39 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var jwtSettings = Configuration.GetSection("JwtSettings");
 
-            var secret = jwtSettings["Secret"]
-                ?? throw new InvalidOperationException("JWT Secret não configurado em appsettings.json");
+            services.AddEndpointsApiExplorer();
+            services.AddReverseProxy()
+                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
+            services.AddDbContext<GatewayDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("GatewayConnection")));
 
-            var issuer = jwtSettings["Issuer"]
-                ?? throw new InvalidOperationException("JWT Issuer não configurado em appsettings.json");
-
-            var audience = jwtSettings["Audience"]
-                ?? throw new InvalidOperationException("JWT Audience não configurado em appsettings.json");
-
-            var key = Encoding.UTF8.GetBytes(secret);
-
-            services.AddAuthentication(options =>
+            services.AddSingleton<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddSingleton<JwtService>();
+            services.AddTransient<AuthService>();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+            services.AddControllers();
+            services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer("JwtBearer", options =>
-            {
+                var jwtSettings = Configuration.GetSection("JwtSettings");
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = issuer,
-                    ValidAudience = audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
+    
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
+                    )
                 };
             });
-            services.AddEndpointsApiExplorer();
-            services.AddReverseProxy()
-                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
-             services.AddDbContext<GatewayDbContext>(options =>
-             options.UseSqlServer(Configuration.GetConnectionString("GatewayConnection")));
-
-            services.AddSingleton<IPasswordHasher<Usuario>, PasswordHasher<Usuario>> ();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-
 
         }
 
@@ -87,10 +78,10 @@ namespace Api
             }
 
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapReverseProxy();
+                endpoints.MapControllers();
             });
         }
     }
