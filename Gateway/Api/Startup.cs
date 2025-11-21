@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 
 
 
@@ -38,30 +39,30 @@ namespace Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new() { Title = "API", Version = "v1" });
+                c.SwaggerDoc("v1", new() { Title = "API Gateway", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                 {
+                    Description = "Insira o token JWT desta forma: Bearer {seu token}",
                     Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
                     In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Description = "Insira o token JWT desta forma: Bearer {seu token}"
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
                 });
 
                 c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
                 {
                     {
-                        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                        {
-                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                            {
+                         new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                         {
+                             Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                             {
                                 Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
+                             }
+                         },
+                         Array.Empty<string>()
                     }
                 });
             });
@@ -83,7 +84,8 @@ namespace Api
                     ValidAudience = jwtSettings["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
-                    )
+                    ),
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
