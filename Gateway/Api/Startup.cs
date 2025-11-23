@@ -2,14 +2,14 @@
 using Api.Infrastructure.Data;
 using Api.Infrastructure.Repositories;
 using Api.Interfaces;
+using Api.Middleware;
 using Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
-
-
+using System.Text;
 
 namespace Api
 {
@@ -25,10 +25,10 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            var configurationYarp = Configuration.GetSection("ReverseProxy");
             services.AddEndpointsApiExplorer();
             services.AddReverseProxy()
-                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
+            .LoadFromConfig(configurationYarp);
             services.AddDbContext<GatewayDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("GatewayConnection")));
 
@@ -39,32 +39,33 @@ namespace Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new() { Title = "API Gateway", Version = "v1" });
+                c.SwaggerDoc("gateway", new() { Title = "API Gateway", Version = "v1"  });
+              
 
-                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "Insira o token JWT desta forma: Bearer {seu token}",
                     Name = "Authorization",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
                     BearerFormat = "JWT"
                 });
 
-                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                         new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                         new OpenApiSecurityScheme
                          {
-                             Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                             Reference = new OpenApiReference
                              {
-                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
                              }
                          },
                          Array.Empty<string>()
                     }
-                });
+                });     
             });
 
             services.AddControllers();
@@ -93,21 +94,30 @@ namespace Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            }
+                app.UseMiddleware<SwaggerPrefixMiddleware>();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/gateway/swagger.json", "Gateway");
 
+                    c.SwaggerEndpoint(
+                        "/vendas/swagger/v1/swagger.json",
+                        "Vendas"
+                    );
+
+                    c.SwaggerEndpoint(
+                        "/estoque/swagger/v1/swagger.json",
+                        "Estoque"
+                    );
+                });
+            }
+          
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
 
             app.UseEndpoints(endpoints =>
             {
