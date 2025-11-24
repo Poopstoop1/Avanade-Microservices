@@ -1,6 +1,9 @@
-﻿using Infrastructure;
+﻿using Application;
+using Infrastructure;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Application;
+using System.Security.Claims;
+using System.Text;
 
 namespace Vendas
 {
@@ -25,10 +28,54 @@ namespace Vendas
                     Version = "v1",
                     Description = "API para gerenciamento de Vendas e Pedidos"
                 });
-            });
-        
 
-             services.AddAuthorization();
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Insira o token JWT desta forma: Bearer {seu token}",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                         new OpenApiSecurityScheme
+                         {
+                             Reference = new OpenApiReference
+                             {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                             }
+                         },
+                         Array.Empty<string>()
+                    }
+                });
+            });
+
+
+            services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                var jwtSettings = Configuration.GetSection("JwtSettings");
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
+                    ),
+                    RoleClaimType = ClaimTypes.Role
+                };
+            });
             services.AddInfrastructure(Configuration);
             services.AddMessageBus(Configuration);
             services.AddApplication();
@@ -47,6 +94,7 @@ namespace Vendas
             }
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

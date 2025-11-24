@@ -4,11 +4,13 @@ using Application.Query;
 using Domain.Enums;
 using Application.DTOs;
 using Application.Command;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Vendas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PedidosController : ControllerBase
     {
         private readonly IMediator _mediator;

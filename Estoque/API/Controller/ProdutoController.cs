@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Application.Query;
 using Application.Command;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controller
 {
     [ApiController]
     [Route("api/produtos")]
+    [Authorize(Roles = "Admin")]
     public class ProdutoController : ControllerBase
     {
         private readonly IMediator _mediator;
