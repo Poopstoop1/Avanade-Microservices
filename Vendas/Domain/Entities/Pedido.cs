@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Domain.Enums;
 using Domain.ValueObjects;
+using Domain.Events;
 
 
 namespace Domain.Entities
@@ -19,7 +15,7 @@ namespace Domain.Entities
 
         public PedidoStatus Status { get; set; } = PedidoStatus.Criado;
 
-        public List<PedidoItem> Itens { get; private  set; } = new List<PedidoItem>();
+        public List<PedidoItem> Itens { get; private set; } = new List<PedidoItem>();
 
         public Pedido(Guid usuarioId, List<PedidoItem> itens)
         {
@@ -27,8 +23,8 @@ namespace Domain.Entities
             UsuarioId = usuarioId;
             Itens = itens;
             ValorTotal = new Preco(itens.Sum(i => i.Subtotal));
-
-            AddDomainEvent(new Events.PedidoCriadoEvent(Id, UsuarioId));
+            var itensDto = Itens.Select(i => new PedidoCriadoEvent.PedidoItemDto(i.ProdutoId, i.Quantidade)).ToList();
+            AddDomainEvent(new PedidoCriadoEvent(Id, itensDto));
         }
         private Pedido() { }
 
@@ -36,8 +32,8 @@ namespace Domain.Entities
         public void PedidoConfirmado()
         {
             Status = PedidoStatus.Confirmado;
-            var itensDto = Itens.Select(i => new Events.PedidoConfirmadoEvent.PedidoItemDto(i.ProdutoId, i.Quantidade)).ToList();
-            AddDomainEvent(new Events.PedidoConfirmadoEvent(Id, UsuarioId, itensDto));
+            var itensDto = Itens.Select(i => new PedidoConfirmadoEvent.PedidoItemDto(i.ProdutoId, i.Quantidade)).ToList();
+            AddDomainEvent(new PedidoConfirmadoEvent(Id, UsuarioId, itensDto));
         }
 
 

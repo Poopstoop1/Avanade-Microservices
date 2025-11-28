@@ -22,8 +22,8 @@ namespace Application.Consumers
             {
                 var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId, cancellationToken);
                 _ = produto ?? throw new KeyNotFoundException($"Produto {item.ProdutoId} não encontrado.");
-           
-                produto.SubtrairEstoque(item.Quantidade);
+
+                produto.ConfirmarReserva(item.Quantidade);
 
                 await _produtoRepository.Update(produto, cancellationToken);
             }

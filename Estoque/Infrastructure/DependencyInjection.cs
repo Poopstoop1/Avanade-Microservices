@@ -28,7 +28,7 @@ namespace Infrastructure
                  new RabbitMQClient(configuration)
              );
 
-            services.AddSingleton<IPedidoConfirmConsumer, PedidoConfirmadoConsumer>();
+            services.AddSingleton<IConsumer, PedidoConfirmadoConsumer>();
             return services;
         }
     }

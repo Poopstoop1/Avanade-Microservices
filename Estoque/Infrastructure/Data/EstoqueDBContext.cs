@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Infrastructure.DB
+namespace Infrastructure.Data
 {
     public class EstoqueDBContext : DbContext
     {
@@ -31,6 +28,7 @@ namespace Infrastructure.DB
                     .IsRequired();
                 });
             entity.Property(p => p.Quantidade).HasColumnName("Quantidade").IsRequired();
+            entity.Property(p => p.Quantidade).HasColumnName("QuantidadeReservada");
         });
     }
 

@@ -25,7 +25,7 @@ namespace Infrastructure.MessageBus
             _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
         }
 
-        public Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T,Task> handleMessage)
+        public Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T, Task> handleMessage)
         {
 
             // Garantir que exchange exista
@@ -42,23 +42,24 @@ namespace Infrastructure.MessageBus
 
             consumer.ReceivedAsync += async (model, ea) =>
             {
-                try { 
-                var messageBody = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var messageObj = JsonSerializer.Deserialize<T>(messageBody);
-
-                if (messageObj == null)
+                try
                 {
-                    Console.WriteLine("Mensagem inválida recebida. Não foi possível desserializar.");
-                    await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
-                    return;
-                }
+                    var messageBody = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    var messageObj = JsonSerializer.Deserialize<T>(messageBody);
 
-                
+                    if (messageObj == null)
+                    {
+                        Console.WriteLine("Mensagem inválida recebida. Não foi possível desserializar.");
+                        await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
+                        return;
+                    }
+
+
                     // Executa lógica do handler passado
                     await handleMessage(messageObj);
 
-                // Confirma processamento da mensagem
-                await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
+                    // Confirma processamento da mensagem
+                    await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
                 }
                 catch (Exception ex)
                 {
@@ -70,6 +71,49 @@ namespace Infrastructure.MessageBus
             // Consumir mensagens da fila
             _channel.BasicConsumeAsync(queue, autoAck: false, consumer).GetAwaiter().GetResult();
             return Task.CompletedTask;
+        }
+
+        public async Task Publish(object message, string routingKey, string exchange, CancellationToken cancellationToken = default)
+        {
+            // Declaração do exchange
+            await _channel.ExchangeDeclareAsync(
+                exchange: exchange,
+                type: ExchangeType.Direct,
+                durable: true,
+                autoDelete: false,
+                cancellationToken: cancellationToken
+            );
+
+            // Declaração da fila
+            await _channel.QueueDeclareAsync(
+                 queue: routingKey,
+                 durable: false,
+                 exclusive: false,
+                 autoDelete: false,
+                 arguments: null,
+                 cancellationToken: cancellationToken
+            );
+
+
+            // Vincular Fila ao Exchange
+            await _channel.QueueBindAsync(
+                queue: routingKey,
+                exchange: exchange,
+                routingKey: routingKey,
+                cancellationToken: cancellationToken
+            );
+
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
+            var properties = new BasicProperties();
+
+            await _channel.BasicPublishAsync<BasicProperties>(
+                exchange: exchange,
+                routingKey: routingKey,
+                mandatory: false,
+                basicProperties: properties,
+                body: body,
+                cancellationToken: cancellationToken
+            );
         }
     }
 }

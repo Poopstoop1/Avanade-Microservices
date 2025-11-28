@@ -11,6 +11,8 @@ namespace Domain.Entities
         public Preco Preco { get; set; } = default!;
         public int Quantidade { get; set; } = default!;
 
+        public int QuantidadeReservada { get; private set; }
+
         public Produto(string nome, string descricao, decimal preco, int quantidade)
         {
             Id = Guid.NewGuid();
@@ -21,15 +23,21 @@ namespace Domain.Entities
         }
         private Produto() { }
 
-        public void SubtrairEstoque(int quantidade)
+
+        public void Reservar(int quantidade)
         {
-            if (quantidade <= 0)
-                throw new Exception("Quantidade deve ser maior que zero.");
+            QuantidadeReservada += quantidade;
+        }
 
-            if (Quantidade < quantidade)
-                throw new Exception("Estoque insuficiente.");
-
+        public void ConfirmarReserva(int quantidade)
+        {
+            QuantidadeReservada -= quantidade;
             Quantidade -= quantidade;
+        }
+
+        public void CancelarReserva(int quantidade)
+        {
+            QuantidadeReservada -= quantidade;
         }
     }
 }

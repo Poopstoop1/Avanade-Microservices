@@ -1,24 +1,18 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using MediatR;
 
 namespace Domain.Events
 {
-    public class PedidoCriadoEvent : IDomainEvent
+    public class PedidoCriadoEvent : IRequest
     {
         public Guid PedidoId { get; }
-
-        public List<PedidoItemDto> Items { get; set; } = [];
-
-        public PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> items)
+        public List<PedidoItemDto> Itens { get; } = [];
+        public PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> itens)
         {
             PedidoId = pedidoId;
-            Items = items;
+            Itens = itens;
         }
-
         public class PedidoItemDto
         {
             public Guid ProdutoId { get; set; }
@@ -29,6 +23,5 @@ namespace Domain.Events
                 Quantidade = quantidade;
             }
         }
-
     }
 }

@@ -6,9 +6,9 @@ namespace API.HostedService
 {
     public class RabbitmqHostedService : BackgroundService
     {
-        private readonly IPedidoConfirmConsumer _pedidoConsumer;
+        private readonly IConsumer _pedidoConsumer;
 
-        public RabbitmqHostedService(IPedidoConfirmConsumer pedidoConsumer)
+        public RabbitmqHostedService(IConsumer pedidoConsumer)
         {
             _pedidoConsumer = pedidoConsumer;
         }

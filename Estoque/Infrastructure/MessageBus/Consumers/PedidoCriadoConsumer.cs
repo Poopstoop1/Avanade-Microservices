@@ -1,34 +1,30 @@
-﻿using Application.Interfaces;
+﻿
+using Application.Interfaces;
 using Domain.Events;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Infrastructure.MessageBus.Consumers
 {
-    public class PedidoConfirmadoConsumer : IConsumer
+    public class PedidoCriadoConsumer : IConsumer
     {
         private readonly IMessageBusClient _messageBus;
-
+        
         private readonly IServiceProvider _serviceProvider;
 
-        public PedidoConfirmadoConsumer(IMessageBusClient rabbit, IServiceProvider serviceProvider)
+        public PedidoCriadoConsumer(IMessageBusClient messageBus, IServiceProvider serviceProvider)
         {
-            _messageBus = rabbit;
+            _messageBus = messageBus;
             _serviceProvider = serviceProvider;
         }
 
+
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _messageBus.Subscribe<PedidoConfirmadoEvent>(
-                exchange: "pedido_exchange",
-                queue: "estoque_pedido_confirmado",
-                routingKey: "pedido.confirmado",
-                handleMessage: async (pedidoConfirmadoEvent) =>
+            await _messageBus.Subscribe<PedidoCriadoEvent>(
+                exchange: "pedido.exchange",
+                queue: "estoque_Pedido_Reservado",
+                routingKey: "pedido-criado",
+                handleMessage: async (pedidoCriadoEvent) =>
                 {
                     try
                     {
@@ -36,9 +32,8 @@ namespace Infrastructure.MessageBus.Consumers
 
                         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-                        await mediator.Send(pedidoConfirmadoEvent, cancellationToken);
+                        await mediator.Send(pedidoCriadoEvent, cancellationToken);
 
-                        Console.WriteLine("Pedido confirmado processado!");
                     }
                     catch (Exception ex)
                     {
@@ -48,5 +43,6 @@ namespace Infrastructure.MessageBus.Consumers
                 }
             );
         }
+
     }
 }

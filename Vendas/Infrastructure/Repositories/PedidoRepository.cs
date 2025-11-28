@@ -4,52 +4,55 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 
-public class PedidoRepository : IPedidoRepository
+namespace Infrastructure.Repositories
 {
-    private readonly VendasDBContext _context;
-
-    public PedidoRepository(VendasDBContext context)
+    public class PedidoRepository : IPedidoRepository
     {
-        _context = context;
-    }
+        private readonly VendasDBContext _context;
 
-    public async Task AddAsync(Pedido pedido, CancellationToken cancellationToken)
-    {
-         await _context.Pedidos.AddAsync(pedido, cancellationToken);
-         await _context.SaveChangesAsync(cancellationToken);
-    }
+        public PedidoRepository(VendasDBContext context)
+        {
+            _context = context;
+        }
 
-    public async Task DeleteAsync(Pedido pedido, CancellationToken cancellationToken)
-    {
-        _context.Pedidos.Remove(pedido);
-        await _context.SaveChangesAsync(cancellationToken);
+        public async Task AddAsync(Pedido pedido, CancellationToken cancellationToken)
+        {
+            await _context.Pedidos.AddAsync(pedido, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
-    }
+        public async Task DeleteAsync(Pedido pedido, CancellationToken cancellationToken)
+        {
+            _context.Pedidos.Remove(pedido);
+            await _context.SaveChangesAsync(cancellationToken);
 
-    public async Task<List<Pedido>> GetAllAsync(CancellationToken cancellationToken)
-    {
-        return await _context.Pedidos.Include(p => p.Itens).ToListAsync(cancellationToken);
-    }
+        }
 
-    public async Task<Pedido?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-       return await _context.Pedidos.
-            Include(p => p.Itens).
-            FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-    }
+        public async Task<List<Pedido>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Pedidos.Include(p => p.Itens).ToListAsync(cancellationToken);
+        }
 
-    public async Task<List<Pedido>> GetByStatusAsync(PedidoStatus status, CancellationToken cancellationToken)
-    {
-        return await _context.Pedidos
-            .Where(p => p.Status == status)
-            .Include(p => p.Itens)
-            .ToListAsync(cancellationToken);
-    }
+        public async Task<Pedido?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _context.Pedidos.
+                 Include(p => p.Itens).
+                 FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        }
 
-    public async Task UpdateAsync(Pedido pedido, CancellationToken cancellationToken)
-    {
-        _context.Pedidos.Update(pedido);
-        await _context.SaveChangesAsync(cancellationToken);
-       
+        public async Task<List<Pedido>> GetByStatusAsync(PedidoStatus status, CancellationToken cancellationToken)
+        {
+            return await _context.Pedidos
+                .Where(p => p.Status == status)
+                .Include(p => p.Itens)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task UpdateAsync(Pedido pedido, CancellationToken cancellationToken)
+        {
+            _context.Pedidos.Update(pedido);
+            await _context.SaveChangesAsync(cancellationToken);
+
+        }
     }
 }
