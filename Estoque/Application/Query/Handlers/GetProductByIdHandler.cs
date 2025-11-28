@@ -32,7 +32,7 @@ namespace Application.Query.Handlers
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Preco = produto.Preco.Valor,
-                Quantidade = produto.Quantidade
+                Quantidade = produto.Quantidade,
             };
 
         }

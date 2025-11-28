@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class MigrationCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,8 @@ namespace Infrastructure.Data.Migrations
                     Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantidade = table.Column<int>(type: "int", nullable: false)
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    QuantidadeReservada = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

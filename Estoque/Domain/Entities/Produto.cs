@@ -11,7 +11,7 @@ namespace Domain.Entities
         public Preco Preco { get; set; } = default!;
         public int Quantidade { get; set; } = default!;
 
-        public int QuantidadeReservada { get; private set; }
+        public int QuantidadeReservada { get; private set; } = default!;
 
         public Produto(string nome, string descricao, decimal preco, int quantidade)
         {

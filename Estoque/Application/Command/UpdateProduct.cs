@@ -10,13 +10,14 @@ namespace Application.Command
     public class UpdateProduct : IRequest<Unit>
     {
 
-        public UpdateProduct(Guid id,string nome, string descricao, decimal preco,  int quantidade)
+        public UpdateProduct(Guid id,string nome, string descricao, decimal preco,  int quantidade )
         {
             Id = id;
             Nome = nome;
             Descricao = descricao;
             Preco = preco;
             Quantidade = quantidade;
+           
         }
 
         public Guid Id { get; }

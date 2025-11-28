@@ -1,7 +1,7 @@
 
 using Application.Interfaces;
 using Domain.IRepository;
-using Infrastructure.DB;
+using Infrastructure.Data;
 using Infrastructure.MessageBus;
 using Infrastructure.MessageBus.Consumers;
 using Infrastructure.Repositories;

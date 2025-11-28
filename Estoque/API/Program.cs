@@ -1,5 +1,5 @@
 using API;
-using Infrastructure.DB;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 /*

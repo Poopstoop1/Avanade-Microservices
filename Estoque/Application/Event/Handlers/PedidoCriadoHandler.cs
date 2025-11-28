@@ -17,7 +17,7 @@ namespace Application.Event.Handlers
             _repo = repo;
             _bus = bus;
         }
-
+            
         public async Task Handle(PedidoCriadoEvent request, CancellationToken cancellationToken)
         {
             try

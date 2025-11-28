@@ -28,7 +28,7 @@ namespace Infrastructure.Data
                     .IsRequired();
                 });
             entity.Property(p => p.Quantidade).HasColumnName("Quantidade").IsRequired();
-            entity.Property(p => p.Quantidade).HasColumnName("QuantidadeReservada");
+            entity.Property(p => p.QuantidadeReservada).HasColumnName("QuantidadeReservada");
         });
     }
 
