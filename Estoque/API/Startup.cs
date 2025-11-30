@@ -1,6 +1,8 @@
 ﻿using API.HostedService;
 using Application;
 using Infrastructure;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
@@ -85,6 +87,12 @@ namespace API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<EstoqueDBContext>();
+                db.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();

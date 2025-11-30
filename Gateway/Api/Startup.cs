@@ -40,8 +40,8 @@ namespace Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("gateway", new() { Title = "API Gateway", Version = "v1"  });
-              
+                c.SwaggerDoc("gateway", new() { Title = "API Gateway", Version = "v1" });
+
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -66,7 +66,7 @@ namespace Api
                          },
                          Array.Empty<string>()
                     }
-                });     
+                });
             });
 
             services.AddControllers();
@@ -96,6 +96,12 @@ namespace Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<GatewayDbContext>();
+                db.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseMiddleware<SwaggerPrefixMiddleware>();
@@ -115,7 +121,7 @@ namespace Api
                     );
                 });
             }
-          
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

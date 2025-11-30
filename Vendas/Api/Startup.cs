@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.Text;
 using Vendas.HostedService;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Vendas
 {
@@ -85,6 +87,12 @@ namespace Vendas
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<VendasDBContext>();
+                db.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
