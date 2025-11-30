@@ -46,7 +46,7 @@ namespace Application.Consumers.Handlers
                 await _bus.Publish(
                     new EstoqueRejeitadoEvent(request.PedidoId, ex.Message),
                     routingKey: "estoque-indisponivel",
-                    exchange: "pedido.exchange",
+                    exchange: "estoque.exchange",
                     cancellationToken);
             }
 

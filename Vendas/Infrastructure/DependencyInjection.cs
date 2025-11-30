@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Interfaces;
+using Infrastructure.MessageBus.Consumers;
 
 namespace Infrastructure
 {
@@ -28,6 +29,9 @@ namespace Infrastructure
             services.AddSingleton<IMessageBusClient>(sp =>
                  new RabbitMQClient(configuration)
              );
+
+            services.AddSingleton<IConsumer,EstoqueRejeitadoConsumer>();
+
             return services;
         }
     }

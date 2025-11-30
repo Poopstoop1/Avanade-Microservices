@@ -36,6 +36,11 @@ namespace Domain.Entities
             AddDomainEvent(new PedidoConfirmadoEvent(Id, UsuarioId, itensDto));
         }
 
+        public void PedidoCancelado() {
+            Status = PedidoStatus.Cancelado;
+        }
+
+
 
     }
 }

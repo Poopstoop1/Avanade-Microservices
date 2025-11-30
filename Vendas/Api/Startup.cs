@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.Text;
+using Vendas.HostedService;
 
 namespace Vendas
 {
@@ -78,6 +79,7 @@ namespace Vendas
             });
             services.AddInfrastructure(Configuration);
             services.AddMessageBus(Configuration);
+            services.AddHostedService<RabbitmqHostedService>();
             services.AddApplication();
         }
 

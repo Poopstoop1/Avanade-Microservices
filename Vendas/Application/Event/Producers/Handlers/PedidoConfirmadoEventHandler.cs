@@ -2,7 +2,7 @@
 using Domain.Events;
 using MediatR;
 
-namespace Application.Event.Handlers
+namespace Application.Event.Producers.Handlers
 {
     public class PedidoConfirmadoEventHandler : INotificationHandler<PedidoConfirmadoEvent>
     {
