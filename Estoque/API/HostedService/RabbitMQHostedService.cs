@@ -6,16 +6,19 @@ namespace API.HostedService
 {
     public class RabbitmqHostedService : BackgroundService
     {
-        private readonly IConsumer _pedidoConsumer;
+        private readonly IEnumerable<IConsumer> _consumers;
 
-        public RabbitmqHostedService(IConsumer pedidoConsumer)
+        public RabbitmqHostedService(IEnumerable<IConsumer> consumers)
         {
-            _pedidoConsumer = pedidoConsumer;
+            _consumers = consumers;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _pedidoConsumer.StartAsync(stoppingToken);
+            var tasks = _consumers
+                .Select(c => c.StartAsync(stoppingToken));
+
+            await Task.WhenAll(tasks);
         }
     }
 }

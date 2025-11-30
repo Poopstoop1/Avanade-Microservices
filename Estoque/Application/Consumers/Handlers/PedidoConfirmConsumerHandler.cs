@@ -3,7 +3,7 @@ using Domain.IRepository;
 using MediatR;
 
 
-namespace Application.Consumers
+namespace Application.Consumers.Handlers
 {
     public class PedidoConfirmConsumerHandler : IRequestHandler<PedidoConfirmadoEvent,Unit>
     {

@@ -22,7 +22,7 @@ namespace Infrastructure.MessageBus.Consumers
         {
             await _messageBus.Subscribe<PedidoCriadoEvent>(
                 exchange: "pedido.exchange",
-                queue: "estoque_Pedido_Reservado",
+                queue: "estoque_pedido_reservado",
                 routingKey: "pedido-criado",
                 handleMessage: async (pedidoCriadoEvent) =>
                 {
@@ -33,6 +33,7 @@ namespace Infrastructure.MessageBus.Consumers
                         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
                         await mediator.Send(pedidoCriadoEvent, cancellationToken);
+                        Console.WriteLine("Pedido criado processado!");
 
                     }
                     catch (Exception ex)

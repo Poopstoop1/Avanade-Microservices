@@ -1,14 +1,16 @@
 
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
+using MediatR;
 
 namespace Infrastructure.Data
 {
     public class EstoqueDBContext : DbContext
     {
-        public EstoqueDBContext(DbContextOptions<EstoqueDBContext> options) : base(options)
-        {   
+        private readonly IMediator _mediator;
+        public EstoqueDBContext(DbContextOptions<EstoqueDBContext> options, IMediator mediator) : base(options)
+        {
+            _mediator = mediator;
         }
 
         public DbSet<Produto> Produtos { get; set; }
@@ -32,5 +34,29 @@ namespace Infrastructure.Data
         });
     }
 
-  }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var domainEntities = ChangeTracker
+                .Entries<AggregateRoot>()
+                .Where(x => x.Entity.DomainEvents.Any())
+                .ToList();
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.DomainEvents)
+                .ToList();
+
+            foreach (var entity in domainEntities)
+                entity.Entity.ClearDomainEvents();
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            foreach (var domainEvent in domainEvents)
+                await _mediator.Publish(domainEvent, cancellationToken);
+
+            return result;
+        }
+
+
+    }
 }

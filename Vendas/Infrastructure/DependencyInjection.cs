@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Data;
 using Infrastructure.MessageBus;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

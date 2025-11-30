@@ -29,6 +29,9 @@ namespace Infrastructure
              );
 
             services.AddSingleton<IConsumer, PedidoConfirmadoConsumer>();
+
+            services.AddSingleton<IConsumer, PedidoCriadoConsumer>();
+
             return services;
         }
     }

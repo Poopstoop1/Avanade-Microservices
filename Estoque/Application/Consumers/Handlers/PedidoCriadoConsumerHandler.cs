@@ -1,18 +1,17 @@
-﻿
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Events;
 using Domain.IRepository;
 using MediatR;
 
-namespace Application.Event.Handlers
+namespace Application.Consumers.Handlers
 {
-    public class PedidoCriadoHandler : IRequestHandler<PedidoCriadoEvent>
+    public class PedidoCriadoConsumerHandler : IRequestHandler<PedidoCriadoEvent>
     {
 
         private readonly IProdutoRepository _repo;
         private readonly IMessageBusClient _bus;
 
-        public PedidoCriadoHandler(IProdutoRepository repo, IMessageBusClient bus)
+        public PedidoCriadoConsumerHandler(IProdutoRepository repo, IMessageBusClient bus)
         {
             _repo = repo;
             _bus = bus;
@@ -23,7 +22,7 @@ namespace Application.Event.Handlers
             try
             {
                
-                foreach (var item in request.Itens)
+                foreach (var item in request.Items)
                 {
                     var produto = await _repo.GetByIdAsync(item.ProdutoId, cancellationToken);
 

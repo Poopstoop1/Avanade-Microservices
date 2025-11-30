@@ -6,12 +6,12 @@ namespace Domain.Events
 {
     public class PedidoCriadoEvent : IRequest
     {
-        public Guid PedidoId { get; }
-        public List<PedidoItemDto> Itens { get; } = [];
-        public PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> itens)
+        public Guid PedidoId { get; set; }
+        public List<PedidoItemDto> Items { get; set; } = [];
+        public PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> items)
         {
             PedidoId = pedidoId;
-            Itens = itens;
+            Items = items;
         }
         public class PedidoItemDto
         {
