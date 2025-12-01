@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Application.DTOs
+namespace Application.DTOs.InputModels
 {
-    public class ProdutoDTO
+    public class ProdutoInputDTO
     {
         public string Nome { get; set; } = default!;
         public string Descricao { get; set; } = default!;

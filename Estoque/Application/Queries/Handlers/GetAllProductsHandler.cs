@@ -1,15 +1,10 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.ViewModels;
 using Domain.IRepository;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Query.Handlers
+namespace Application.Queries.Handlers
 {
-    public class GetAllProductsHandler : IRequestHandler<GetAllProducts, List<ProdutoDTO>>
+    public class GetAllProductsHandler : IRequestHandler<GetAllProducts, List<ProdutoViewDTO>>
     {
         private readonly IProdutoRepository produtoRepository;
 
@@ -18,17 +13,19 @@ namespace Application.Query.Handlers
             this.produtoRepository = produtoRepository;
         }
 
-        public async Task<List<ProdutoDTO>> Handle(GetAllProducts request, CancellationToken cancellationToken)
+        public async Task<List<ProdutoViewDTO>> Handle(GetAllProducts request, CancellationToken cancellationToken)
         {
 
             var produtos = await produtoRepository.GetAllAsync(cancellationToken);
 
-            return produtos.Select(produto => new ProdutoDTO
+            return produtos.Select(produto => new ProdutoViewDTO
             {
+                Id = produto.Id,
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Preco = produto.Preco.Valor,
-                Quantidade = produto.Quantidade
+                Quantidade = produto.Quantidade,
+                QuantidadeReservada = produto.QuantidadeReservada
             }).ToList();
 
         }

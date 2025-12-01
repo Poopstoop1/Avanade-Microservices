@@ -1,15 +1,15 @@
-using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Application.Query;
+using Application.Queries;
 using Application.Command;
 using Microsoft.AspNetCore.Authorization;
+using Application.DTOs.InputModels;
 
 namespace API.Controller
 {
     [ApiController]
     [Route("api/produtos")]
-    [Authorize(Roles = "Admin")]
+    [Authorize()]
     public class ProdutoController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -61,7 +61,7 @@ namespace API.Controller
 
         // Command
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] ProdutoDTO produto)
+        public async Task<IActionResult> AddProduct([FromBody] ProdutoInputDTO produto)
         {
             try {
                 var command = new AddProduct
@@ -83,7 +83,7 @@ namespace API.Controller
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduto(Guid id, [FromBody] ProdutoDTO produto)
+        public async Task<IActionResult> UpdateProduto(Guid id, [FromBody] ProdutoInputDTO produto)
         {
             var command = new UpdateProduct
             (

@@ -1,15 +1,10 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.ViewModels;
 using Domain.IRepository;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Query.Handlers
+namespace Application.Queries.Handlers
 {
-    public class GetProductByIdHandler : IRequestHandler<GetProductById, ProdutoDTO>
+    public class GetProductByIdHandler : IRequestHandler<GetProductById, ProdutoViewDTO>
     {
         private readonly IProdutoRepository _produtoRepository;
 
@@ -18,7 +13,7 @@ namespace Application.Query.Handlers
             _produtoRepository = produtoRepository;
         }
 
-        public async Task<ProdutoDTO> Handle(GetProductById request, CancellationToken cancellationToken)
+        public async Task<ProdutoViewDTO> Handle(GetProductById request, CancellationToken cancellationToken)
         {
             var produto = await _produtoRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -27,12 +22,14 @@ namespace Application.Query.Handlers
                 throw new KeyNotFoundException($"Produto com Id {request.Id} não encontrado.");
             }
 
-            return new ProdutoDTO
+            return new ProdutoViewDTO
             {
+                Id = produto.Id,
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Preco = produto.Preco.Valor,
                 Quantidade = produto.Quantidade,
+                QuantidadeReservada = produto.QuantidadeReservada
             };
 
         }
