@@ -21,6 +21,7 @@ namespace Application.Queries.Handlers
             return [
                 ..produtos.Select(p => new PedidoViewDTO
                 {
+                    Id = p.Id,
                     UsuarioId = p.UsuarioId,
                     DataCriacao = p.DataCriacao,
                     ValorTotal = p.ValorTotal,
@@ -29,6 +30,7 @@ namespace Application.Queries.Handlers
                         ..p.Itens.Select(i => new PedidoItemDTO
                         {
                             ProdutoId = i.ProdutoId,
+                            NomeProduto = i.NomeProduto,
                             Quantidade = i.Quantidade,
                             PrecoUnitario = i.PrecoUnitario
                         })

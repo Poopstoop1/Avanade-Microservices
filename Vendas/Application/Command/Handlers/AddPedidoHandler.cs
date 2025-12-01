@@ -17,7 +17,12 @@ namespace Application.Command.Handlers
 
         public async Task<Guid> Handle(AddPedido request, CancellationToken cancellationToken)
         {
-            var itens = request.Itens.Select(i => new PedidoItem(i.ProdutoId, i.NomeProduto, i.Quantidade, new Preco(i.PrecoUnitario))).ToList();
+            List<PedidoItem> itens =
+            [
+                ..request.Itens.Select(i =>
+                    new PedidoItem(i.ProdutoId, i.NomeProduto, i.Quantidade, new Preco(i.PrecoUnitario))
+                )
+            ];
 
             var pedido = new Pedido(request.UsuarioId, itens);
             await _pedidoRepository.AddAsync(pedido,cancellationToken);
