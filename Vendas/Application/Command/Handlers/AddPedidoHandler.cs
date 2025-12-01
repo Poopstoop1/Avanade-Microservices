@@ -5,15 +5,9 @@ using MediatR;
 
 namespace Application.Command.Handlers
 {
-    public class AddPedidoHandler : IRequestHandler<AddPedido, Guid>
+    public class AddPedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<AddPedido, Guid>
     {
-        private readonly IPedidoRepository _pedidoRepository;
-
-        public AddPedidoHandler(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
-
-        }
+        private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
         public async Task<Guid> Handle(AddPedido request, CancellationToken cancellationToken)
         {

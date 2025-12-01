@@ -4,14 +4,9 @@ using MediatR;
 
 namespace Application.Event.Producers.Handlers
 {
-    public class PedidoConfirmadoEventHandler : INotificationHandler<PedidoConfirmadoEvent>
+    public class PedidoConfirmadoEventHandler(IMessageBusClient bus) : INotificationHandler<PedidoConfirmadoEvent>
     {
-        private readonly IMessageBusClient _bus;
-
-        public PedidoConfirmadoEventHandler(IMessageBusClient bus)
-        {
-            _bus = bus;
-        }
+        private readonly IMessageBusClient _bus = bus;
 
         public async Task Handle(PedidoConfirmadoEvent notification, CancellationToken cancellationToken)
         {

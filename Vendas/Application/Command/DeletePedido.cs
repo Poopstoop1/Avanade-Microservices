@@ -2,13 +2,9 @@
 
 namespace Application.Command
 {
-    public class DeletePedido : IRequest<Unit>
+    public class DeletePedido(Guid id) : IRequest<Unit>
     {
-        public DeletePedido(Guid id)
-        {
-            Id = id;
-        }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; private set; } = id;
     }
 }

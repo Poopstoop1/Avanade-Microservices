@@ -2,14 +2,11 @@
 
 namespace Application.Command.Handlers
 {
-    public class DeletePedidoHandler : IRequestHandler<DeletePedido, Unit>
+    public class DeletePedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<DeletePedido, Unit>
     {
-        private readonly IPedidoRepository _pedidoRepository;
+        private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
-        public DeletePedidoHandler(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
-        }
+     
 
         public async Task<Unit> Handle(DeletePedido request, CancellationToken cancellationToken)
         {

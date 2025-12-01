@@ -4,14 +4,9 @@ using MediatR;
 
 namespace Application.Event.Producers.Handlers
 {
-    public class PedidoCriadoEventHandler : INotificationHandler<PedidoCriadoEvent>
+    public class PedidoCriadoEventHandler(IMessageBusClient bus) : INotificationHandler<PedidoCriadoEvent>
     {
-        private readonly IMessageBusClient _bus;
-
-        public PedidoCriadoEventHandler(IMessageBusClient bus)
-        {
-            _bus = bus;
-        }
+        private readonly IMessageBusClient _bus = bus;
 
         public async Task Handle(PedidoCriadoEvent notification, CancellationToken cancellationToken)
         {

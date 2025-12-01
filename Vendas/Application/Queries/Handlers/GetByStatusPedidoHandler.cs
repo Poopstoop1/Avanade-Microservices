@@ -5,14 +5,9 @@ using MediatR;
 
 namespace Application.Queries.Handlers
 {
-    public class GetByStatusPedidoHandler : IRequestHandler<GetByStatusPedido, List<PedidoViewDTO>>
+    public class GetByStatusPedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<GetByStatusPedido, List<PedidoViewDTO>>
     {
-        private readonly IPedidoRepository _pedidoRepository;
-
-        public GetByStatusPedidoHandler(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
-        }
+        private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
         public async Task<List<PedidoViewDTO>> Handle(GetByStatusPedido request, CancellationToken cancellationToken)
         {

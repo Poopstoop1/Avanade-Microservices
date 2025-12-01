@@ -3,17 +3,12 @@ using MediatR;
 
 namespace Application.Command
 {
-    public class AddPedido : IRequest<Guid>
+    public class AddPedido(Guid usuarioId, List<PedidoItemDTO> itens) : IRequest<Guid>
     {
-        public AddPedido(Guid usuarioId, List<PedidoItemDTO> itens)
-        {
-            UsuarioId = usuarioId;
-            Itens = itens;
-        }
 
-        public Guid UsuarioId { get; set; }
+        public Guid UsuarioId { get; set; } = usuarioId;
      
-        public List<PedidoItemDTO> Itens { get; set; } = [];
+        public List<PedidoItemDTO> Itens { get; set; } = itens;
 
     }
 }

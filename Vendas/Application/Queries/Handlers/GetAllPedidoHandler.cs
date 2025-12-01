@@ -4,15 +4,9 @@ using MediatR;
 
 namespace Application.Queries.Handlers
 {
-    public class GetAllPedidoHandler : IRequestHandler<GetByAllPedido, List<PedidoViewDTO>>
+    public class GetAllPedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<GetByAllPedido, List<PedidoViewDTO>>
     {
-        private readonly IPedidoRepository _pedidoRepository;
-
-        public GetAllPedidoHandler(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
-        }
-
+        private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
 
         public async Task<List<PedidoViewDTO>> Handle(GetByAllPedido request, CancellationToken cancellationToken)
         {

@@ -4,15 +4,11 @@ using MediatR;
 
 namespace Application.Command.Handlers
 {
-    public class UpdatePedidoHandler : IRequestHandler<UpdatePedido, Unit>
+    public class UpdatePedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<UpdatePedido, Unit>
     {
-        private readonly IPedidoRepository _pedidoRepository;
+        private readonly IPedidoRepository _pedidoRepository  = pedidoRepository;
 
-        public UpdatePedidoHandler(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
- 
-        }
+     
 
         public async Task<Unit> Handle(UpdatePedido request, CancellationToken cancellationToken)
         {

@@ -3,14 +3,10 @@ using MediatR;
 
 namespace Application.Queries
 {
-    public class GetByIdPedido : IRequest<PedidoViewDTO>
+    public class GetByIdPedido(Guid id) : IRequest<PedidoViewDTO>
     {
-        
-        public GetByIdPedido(Guid id)
-        {
-            Id = id;
-        }
-        public Guid Id { get; private set; }
+
+        public Guid Id { get; set; } = id;
 
     }
 }
