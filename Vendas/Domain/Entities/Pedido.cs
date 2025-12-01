@@ -15,7 +15,7 @@ namespace Domain.Entities
 
         public PedidoStatus Status { get; set; } = PedidoStatus.Criado;
 
-        public List<PedidoItem> Itens { get; private set; } = new List<PedidoItem>();
+        public List<PedidoItem> Itens { get; private set; } = [];
 
         public Pedido(Guid usuarioId, List<PedidoItem> itens)
         {

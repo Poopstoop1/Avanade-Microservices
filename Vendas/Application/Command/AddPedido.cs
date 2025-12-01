@@ -1,6 +1,4 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
-
 using MediatR;
 
 namespace Application.Command
@@ -15,7 +13,7 @@ namespace Application.Command
 
         public Guid UsuarioId { get; set; }
      
-        public List<PedidoItemDTO> Itens { get; set; } = new List<PedidoItemDTO>();
+        public List<PedidoItemDTO> Itens { get; set; } = [];
 
     }
 }

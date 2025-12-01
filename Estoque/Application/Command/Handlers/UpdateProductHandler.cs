@@ -1,5 +1,4 @@
-﻿
-using Domain.IRepository;
+﻿using Domain.IRepository;
 using MediatR;
 
 using Domain.ValueObjects;

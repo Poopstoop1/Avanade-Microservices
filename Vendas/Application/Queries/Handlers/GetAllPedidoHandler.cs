@@ -1,9 +1,10 @@
 ﻿using Application.DTOs;
+using Application.DTOs.ViewModels;
 using MediatR;
 
-namespace Application.Query.Handlers
+namespace Application.Queries.Handlers
 {
-    public class GetAllPedidoHandler : IRequestHandler<GetByAllPedido, List<PedidoDTO>>
+    public class GetAllPedidoHandler : IRequestHandler<GetByAllPedido, List<PedidoViewDTO>>
     {
         private readonly IPedidoRepository _pedidoRepository;
 
@@ -13,12 +14,12 @@ namespace Application.Query.Handlers
         }
 
 
-        public async Task<List<PedidoDTO>> Handle(GetByAllPedido request, CancellationToken cancellationToken)
+        public async Task<List<PedidoViewDTO>> Handle(GetByAllPedido request, CancellationToken cancellationToken)
         {
             var produtos = await _pedidoRepository.GetAllAsync(cancellationToken);
 
             return [
-                ..produtos.Select(p => new PedidoDTO
+                ..produtos.Select(p => new PedidoViewDTO
                 {
                     UsuarioId = p.UsuarioId,
                     DataCriacao = p.DataCriacao,

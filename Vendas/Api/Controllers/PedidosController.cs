@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.Query;
+using Application.Queries;
 using Domain.Enums;
-using Application.DTOs;
 using Application.Command;
 using Microsoft.AspNetCore.Authorization;
+using Application.DTOs.InputModels;
 
 namespace Vendas.Controllers
 {
@@ -81,7 +81,7 @@ namespace Vendas.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreatePedido([FromBody] PedidoDTO pedidoDTO)
+        public async Task<IActionResult> CreatePedido([FromBody] PedidoInputDTO pedidoDTO)
         {
             try
             {
