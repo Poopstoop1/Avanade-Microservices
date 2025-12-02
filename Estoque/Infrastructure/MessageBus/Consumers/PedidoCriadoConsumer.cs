@@ -5,18 +5,11 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 namespace Infrastructure.MessageBus.Consumers
 {
-    public class PedidoCriadoConsumer : IConsumer
+    public class PedidoCriadoConsumer(IMessageBusClient messageBus, IServiceProvider serviceProvider) : IConsumer
     {
-        private readonly IMessageBusClient _messageBus;
+        private readonly IMessageBusClient _messageBus = messageBus;
         
-        private readonly IServiceProvider _serviceProvider;
-
-        public PedidoCriadoConsumer(IMessageBusClient messageBus, IServiceProvider serviceProvider)
-        {
-            _messageBus = messageBus;
-            _serviceProvider = serviceProvider;
-        }
-
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {

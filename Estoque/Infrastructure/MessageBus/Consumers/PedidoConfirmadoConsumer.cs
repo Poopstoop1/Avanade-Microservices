@@ -2,25 +2,14 @@
 using Domain.Events;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.MessageBus.Consumers
 {
-    public class PedidoConfirmadoConsumer : IConsumer
+    public class PedidoConfirmadoConsumer(IMessageBusClient rabbit, IServiceProvider serviceProvider) : IConsumer
     {
-        private readonly IMessageBusClient _messageBus;
+        private readonly IMessageBusClient _messageBus = rabbit;
 
-        private readonly IServiceProvider _serviceProvider;
-
-        public PedidoConfirmadoConsumer(IMessageBusClient rabbit, IServiceProvider serviceProvider)
-        {
-            _messageBus = rabbit;
-            _serviceProvider = serviceProvider;
-        }
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {

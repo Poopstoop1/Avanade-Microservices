@@ -10,18 +10,11 @@ namespace API.Controller
     [ApiController]
     [Route("api/produtos")]
     [Authorize()]
-    public class ProdutoController : ControllerBase
+    public class ProdutoController(IMediator mediator, ILogger<ProdutoController> logger) : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator = mediator;
 
-        private readonly ILogger<ProdutoController> _logger;
-
-
-        public ProdutoController(IMediator mediator, ILogger<ProdutoController> logger)
-        {
-            _mediator = mediator;
-            _logger = logger;
-        }
+        private readonly ILogger<ProdutoController> _logger = logger;
 
         // Query
         [HttpGet("{id}")]
