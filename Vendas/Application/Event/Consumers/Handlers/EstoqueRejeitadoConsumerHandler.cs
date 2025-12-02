@@ -1,6 +1,7 @@
 ﻿using Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Domain.IRepository;
 
 namespace Application.Event.Consumers.Handlers
 {

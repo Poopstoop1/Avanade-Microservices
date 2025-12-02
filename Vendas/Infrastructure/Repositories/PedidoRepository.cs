@@ -2,18 +2,14 @@
 using Domain.Enums;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Domain.IRepository;
 
 
 namespace Infrastructure.Repositories
 {
-    public class PedidoRepository : IPedidoRepository
+    public class PedidoRepository(VendasDBContext context) : IPedidoRepository
     {
-        private readonly VendasDBContext _context;
-
-        public PedidoRepository(VendasDBContext context)
-        {
-            _context = context;
-        }
+        private readonly VendasDBContext _context = context;
 
         public async Task AddAsync(Pedido pedido, CancellationToken cancellationToken)
         {

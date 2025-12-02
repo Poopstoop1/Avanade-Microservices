@@ -5,17 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.MessageBus.Consumers
 {
-    public class EstoqueRejeitadoConsumer : IConsumer
+    public class EstoqueRejeitadoConsumer(IMessageBusClient messageBus, IServiceProvider serviceProvider) : IConsumer
     {
-        private readonly IMessageBusClient _messageBus;
+        private readonly IMessageBusClient _messageBus = messageBus;
 
-        private readonly IServiceProvider _serviceProvider;
-
-        public EstoqueRejeitadoConsumer(IMessageBusClient messageBus, IServiceProvider serviceProvider)
-        {
-            _messageBus = messageBus;
-            _serviceProvider = serviceProvider;
-        }
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
 
         public async Task StartAsync(CancellationToken cancellationToken)

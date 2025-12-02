@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Interfaces;
 using Infrastructure.MessageBus.Consumers;
+using Domain.IRepository;
 
 namespace Infrastructure
 {
