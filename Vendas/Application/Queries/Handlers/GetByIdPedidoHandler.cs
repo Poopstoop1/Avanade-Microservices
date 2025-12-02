@@ -1,8 +1,7 @@
 ﻿using Application.DTOs;
-using Application.DTOs.InputModels;
 using Application.DTOs.ViewModels;
 using MediatR;
-
+using Domain.IRepository;
 
 namespace Application.Queries.Handlers
 {

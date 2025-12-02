@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.ValueObjects;
 using MediatR;
-
+using Domain.IRepository;
 
 namespace Application.Command.Handlers
 {

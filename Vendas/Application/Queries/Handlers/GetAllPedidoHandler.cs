@@ -1,7 +1,7 @@
 ﻿using Application.DTOs;
 using Application.DTOs.ViewModels;
 using MediatR;
-
+using Domain.IRepository;
 namespace Application.Queries.Handlers
 {
     public class GetAllPedidoHandler(IPedidoRepository pedidoRepository) : IRequestHandler<GetByAllPedido, List<PedidoViewDTO>>

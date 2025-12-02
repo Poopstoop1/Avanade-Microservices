@@ -1,5 +1,6 @@
 ﻿using Domain.Enums;
 using MediatR;
+using Domain.IRepository;
 
 
 namespace Application.Command.Handlers
