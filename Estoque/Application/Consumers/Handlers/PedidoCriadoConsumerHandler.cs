@@ -24,10 +24,8 @@ namespace Application.Consumers.Handlers
                
                 foreach (var item in request.Items)
                 {
-                    var produto = await _repo.GetByIdAsync(item.ProdutoId, cancellationToken);
-
-                    if (produto is null) 
-                        throw new InvalidOperationException($"Produto {item.ProdutoId} não encontrado no estoque."); 
+                    var produto = await _repo.GetByIdAsync(item.ProdutoId, cancellationToken) 
+                        ?? throw new InvalidOperationException($"Produto {item.ProdutoId} não encontrado no estoque."); 
                     
                     var estoqueLivre = produto.Quantidade - produto.QuantidadeReservada;
 

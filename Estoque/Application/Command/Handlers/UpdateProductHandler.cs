@@ -16,11 +16,9 @@ namespace Application.Command.Handlers
 
         public async Task<Unit> Handle(UpdateProduct request, CancellationToken cancellationToken)
         {
-            var produto = await _produtoRepository.GetByIdAsync(request.Id, cancellationToken);
-            if (produto == null)
-            {
-                throw new KeyNotFoundException($"Produto com Id {request.Id} não encontrado.");
-            }
+            var produto = await _produtoRepository.GetByIdAsync(request.Id, cancellationToken) 
+                ?? throw new KeyNotFoundException($"Produto com Id {request.Id} não encontrado.");
+            
 
             produto.Nome = request.Nome;
             produto.Descricao = request.Descricao;

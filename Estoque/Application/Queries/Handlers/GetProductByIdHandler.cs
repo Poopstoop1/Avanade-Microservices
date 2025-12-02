@@ -15,13 +15,9 @@ namespace Application.Queries.Handlers
 
         public async Task<ProdutoViewDTO> Handle(GetProductById request, CancellationToken cancellationToken)
         {
-            var produto = await _produtoRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (produto == null)
-            {
-                throw new KeyNotFoundException($"Produto com Id {request.Id} não encontrado.");
-            }
-
+            var produto = await _produtoRepository.GetByIdAsync(request.Id, cancellationToken)
+              ?? throw new KeyNotFoundException($"Produto com Id {request.Id} não encontrado.");
+            
             return new ProdutoViewDTO
             {
                 Id = produto.Id,

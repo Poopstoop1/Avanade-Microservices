@@ -20,8 +20,8 @@ namespace Application.Consumers.Handlers
 
             foreach (var item in notification.Itens)
             {
-                var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId, cancellationToken);
-                _ = produto ?? throw new KeyNotFoundException($"Produto {item.ProdutoId} não encontrado.");
+                var produto = await _produtoRepository.GetByIdAsync(item.ProdutoId, cancellationToken)
+                    ?? throw new KeyNotFoundException($"Produto {item.ProdutoId} não encontrado.");
 
                 produto.ConfirmarReserva(item.Quantidade);
 
