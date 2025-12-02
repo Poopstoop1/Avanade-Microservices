@@ -18,15 +18,18 @@ namespace Application.Queries.Handlers
 
             var produtos = await produtoRepository.GetAllAsync(cancellationToken);
 
-            return produtos.Select(produto => new ProdutoViewDTO
-            {
+            return
+            [ 
+                ..produtos.Select(produto => new ProdutoViewDTO
+                {
                 Id = produto.Id,
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Preco = produto.Preco.Valor,
                 Quantidade = produto.Quantidade,
                 QuantidadeReservada = produto.QuantidadeReservada
-            }).ToList();
+                })
+            ];
 
         }
     }
