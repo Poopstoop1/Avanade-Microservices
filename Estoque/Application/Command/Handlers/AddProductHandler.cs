@@ -4,14 +4,9 @@ using Domain.Entities;
 
 namespace Application.Command.Handlers
 {
-    public class AddProductHandler : IRequestHandler<AddProduct, Guid>
+    public class AddProductHandler(IProdutoRepository produtoRepository) : IRequestHandler<AddProduct, Guid>
     {
-        private readonly IProdutoRepository _produtoRepository;
-
-        public AddProductHandler(IProdutoRepository produtoRepository)
-        {
-            _produtoRepository = produtoRepository;
-        }
+        private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
         public async Task<Guid> Handle(AddProduct request, CancellationToken cancellationToken)
         {

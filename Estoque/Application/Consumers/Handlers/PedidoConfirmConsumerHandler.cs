@@ -5,15 +5,10 @@ using MediatR;
 
 namespace Application.Consumers.Handlers
 {
-    public class PedidoConfirmConsumerHandler : IRequestHandler<PedidoConfirmadoEvent,Unit>
+    public class PedidoConfirmConsumerHandler(IProdutoRepository produtoRepository) : IRequestHandler<PedidoConfirmadoEvent,Unit>
     {
 
-        private readonly IProdutoRepository _produtoRepository;
-
-        public PedidoConfirmConsumerHandler(IProdutoRepository produtoRepository)
-        {
-            _produtoRepository = produtoRepository;
-        }
+        private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
         public async Task<Unit> Handle(PedidoConfirmadoEvent notification, CancellationToken cancellationToken)
         {

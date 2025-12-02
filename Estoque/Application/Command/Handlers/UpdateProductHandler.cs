@@ -5,14 +5,9 @@ using Domain.ValueObjects;
 
 namespace Application.Command.Handlers
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateProduct, Unit>
+    public class UpdateProductHandler(IProdutoRepository produtoRepository) : IRequestHandler<UpdateProduct, Unit>
     {
-        private readonly IProdutoRepository _produtoRepository;
-
-        public UpdateProductHandler(IProdutoRepository produtoRepository)
-        {
-            _produtoRepository = produtoRepository;
-        }
+        private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
         public async Task<Unit> Handle(UpdateProduct request, CancellationToken cancellationToken)
         {

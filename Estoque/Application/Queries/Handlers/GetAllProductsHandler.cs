@@ -4,14 +4,9 @@ using MediatR;
 
 namespace Application.Queries.Handlers
 {
-    public class GetAllProductsHandler : IRequestHandler<GetAllProducts, List<ProdutoViewDTO>>
+    public class GetAllProductsHandler(IProdutoRepository produtoRepository) : IRequestHandler<GetAllProducts, List<ProdutoViewDTO>>
     {
-        private readonly IProdutoRepository produtoRepository;
-
-        public GetAllProductsHandler(IProdutoRepository produtoRepository)
-        {
-            this.produtoRepository = produtoRepository;
-        }
+        private readonly IProdutoRepository produtoRepository = produtoRepository;
 
         public async Task<List<ProdutoViewDTO>> Handle(GetAllProducts request, CancellationToken cancellationToken)
         {

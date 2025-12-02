@@ -5,17 +5,11 @@ using MediatR;
 
 namespace Application.Consumers.Handlers
 {
-    public class PedidoCriadoConsumerHandler : IRequestHandler<PedidoCriadoEvent>
+    public class PedidoCriadoConsumerHandler(IProdutoRepository repo, IMessageBusClient bus) : IRequestHandler<PedidoCriadoEvent>
     {
 
-        private readonly IProdutoRepository _repo;
-        private readonly IMessageBusClient _bus;
-
-        public PedidoCriadoConsumerHandler(IProdutoRepository repo, IMessageBusClient bus)
-        {
-            _repo = repo;
-            _bus = bus;
-        }
+        private readonly IProdutoRepository _repo = repo;
+        private readonly IMessageBusClient _bus = bus;
             
         public async Task Handle(PedidoCriadoEvent request, CancellationToken cancellationToken)
         {

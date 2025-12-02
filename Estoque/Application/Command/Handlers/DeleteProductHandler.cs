@@ -3,14 +3,11 @@ using MediatR;
 
 namespace Application.Command.Handlers
 {
-    public class DeleteProductHandler : IRequestHandler<DeleteProduct, Unit>
+    public class DeleteProductHandler(IProdutoRepository produtoRepository) : IRequestHandler<DeleteProduct, Unit>
     {
-        private readonly IProdutoRepository _produtoRepository;
+        private readonly IProdutoRepository _produtoRepository = produtoRepository;
 
-        public DeleteProductHandler(IProdutoRepository produtoRepository)
-        {
-            _produtoRepository = produtoRepository;
-        }
+       
 
         public async Task<Unit> Handle(DeleteProduct request, CancellationToken cancellationToken)
         {

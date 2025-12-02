@@ -4,14 +4,9 @@ using MediatR;
 
 namespace Application.Queries
 {
-    public class GetProductById : IRequest<ProdutoViewDTO>
+    public class GetProductById(Guid id) : IRequest<ProdutoViewDTO>
     {
-        public GetProductById(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; private set; }
+        public Guid Id { get; private set; } = id;
       
     }
 }
