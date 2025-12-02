@@ -4,14 +4,11 @@ using Application.Interfaces;
 
 namespace Vendas.HostedService
 {
-    public class RabbitmqHostedService : BackgroundService
+    public class RabbitmqHostedService(IEnumerable<IConsumer> consumers) : BackgroundService
     {
-        private readonly IEnumerable<IConsumer> _consumers;
+        private readonly IEnumerable<IConsumer> _consumers = consumers;
 
-        public RabbitmqHostedService(IEnumerable<IConsumer> consumers)
-        {
-            _consumers = consumers;
-        }
+        
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

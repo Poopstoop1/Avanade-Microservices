@@ -11,18 +11,10 @@ namespace Vendas.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PedidosController : ControllerBase
+    public class PedidosController(IMediator mediator, ILogger<PedidosController> logger) : ControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly ILogger<PedidosController> _logger;
-
-
-        public PedidosController(IMediator mediator, ILogger<PedidosController> logger)
-        {
-            _mediator = mediator;
-            _logger = logger;
-
-        }
+        private readonly IMediator _mediator = mediator;
+        private readonly ILogger<PedidosController> _logger = logger;
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPedidoById(Guid id)
