@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Events
 {
-    public class EstoqueRejeitadoEvent : IDomainEvent
+    public class EstoqueRejeitadoEvent(Guid pedidoId, string motivo) : IDomainEvent
     {
-        public Guid PedidoId { get; }
-        public string Motivo { get; }
+        public Guid PedidoId { get; } = pedidoId;
+        public string Motivo { get; } = motivo;
 
-        public EstoqueRejeitadoEvent(Guid pedidoId, string motivo)
-        {
-            PedidoId = pedidoId;
-            Motivo = motivo;
-        }
+       
     }
 }

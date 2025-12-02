@@ -4,28 +4,18 @@ using MediatR;
 
 namespace Domain.Events
 {
-    public class PedidoConfirmadoEvent : IRequest<Unit>
+    public class PedidoConfirmadoEvent(Guid pedidoID, List<ItemPedidoEvent> itens) : IRequest<Unit>
     {
 
-        public Guid PedidoId { get; set; }
-        public List<ItemPedidoEvent> Itens { get; set; } = [];
-        public PedidoConfirmadoEvent(Guid pedidoID, List<ItemPedidoEvent> itens)
-        {
-            PedidoId = pedidoID;
-            Itens = itens;
-        }
+        public Guid PedidoId { get; set; } = pedidoID;
+        public List<ItemPedidoEvent> Itens { get; set; } = itens;
+    
 
     }
-    public class ItemPedidoEvent
+    public class ItemPedidoEvent(Guid produtoId, int quantidade)
     {
-        public Guid ProdutoId { get; set; }
-        public int Quantidade { get; set; }
-
-        public ItemPedidoEvent(Guid produtoId, int quantidade)
-        {
-            ProdutoId = produtoId;
-            Quantidade = quantidade;
-        }
+        public Guid ProdutoId { get; set; } = produtoId;
+        public int Quantidade { get; set; } = quantidade;
 
     }
 }
