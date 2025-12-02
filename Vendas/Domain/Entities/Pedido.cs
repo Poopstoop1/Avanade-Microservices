@@ -1,6 +1,6 @@
 using Domain.Enums;
-using Domain.ValueObjects;
 using Domain.Events;
+using Domain.ValueObjects;
 
 
 namespace Domain.Entities
@@ -23,7 +23,11 @@ namespace Domain.Entities
             UsuarioId = usuarioId;
             Itens = itens;
             ValorTotal = new Preco(itens.Sum(i => i.Subtotal));
-            var itensDto = Itens.Select(i => new PedidoCriadoEvent.PedidoItemDto(i.ProdutoId, i.Quantidade)).ToList();
+            List<PedidoItemDto> itensDto = 
+                [
+                    ..Itens.Select(i => new PedidoItemDto(i.ProdutoId, i.Quantidade))
+                ];
+         
             AddDomainEvent(new PedidoCriadoEvent(Id, itensDto));
         }
         private Pedido() { }
@@ -32,7 +36,10 @@ namespace Domain.Entities
         public void PedidoConfirmado()
         {
             Status = PedidoStatus.Confirmado;
-            var itensDto = Itens.Select(i => new PedidoConfirmadoEvent.PedidoItemDto(i.ProdutoId, i.Quantidade)).ToList();
+            List<PedidoItemDto> itensDto = 
+                [
+                    ..Itens.Select(i => new PedidoItemDto(i.ProdutoId, i.Quantidade))
+                ];
             AddDomainEvent(new PedidoConfirmadoEvent(Id, UsuarioId, itensDto));
         }
 

@@ -1,19 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Domain.ValueObjects
 {
-    public class Preco
+    public class Preco(decimal valor)
     {
         
-        public decimal Valor { get; private set; }
-
-        public Preco(decimal valor) 
-        {
-            Valor = Math.Round(valor, 2);
-        }
+        public decimal Valor { get; private set; } = Math.Round(valor, 2);
     
 
      public override bool Equals(object? obj)

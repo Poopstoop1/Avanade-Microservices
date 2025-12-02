@@ -1,34 +1,18 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Domain.Events
 {
-    public class PedidoCriadoEvent : IDomainEvent
+    public class PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> items) : IDomainEvent
     {
-        public Guid PedidoId { get; }
+        public Guid PedidoId { get; } = pedidoId;
 
-        public List<PedidoItemDto> Items { get; set; } = [];
+        public List<PedidoItemDto> Items { get; set; } = items;
 
-        public PedidoCriadoEvent(Guid pedidoId, List<PedidoItemDto> items)
-        {
-            PedidoId = pedidoId;
-            Items = items;
-        }
 
-        public class PedidoItemDto
-        {
-            public Guid ProdutoId { get; set; }
-            public int Quantidade { get; set; }
-            public PedidoItemDto(Guid produtoId, int quantidade)
-            {
-                ProdutoId = produtoId;
-                Quantidade = quantidade;
-            }
-        }
+    }
+    public class PedidoItemDto(Guid produtoId, int quantidade)
+    {
+        public Guid ProdutoId { get; set; } = produtoId;
+        public int Quantidade { get; set; } = quantidade;   
 
     }
 }

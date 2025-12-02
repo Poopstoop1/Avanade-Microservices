@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         public Guid Id { get; protected set; }
 
-        private readonly List<IDomainEvent> _domainEvents = new();
+        private readonly List<IDomainEvent> _domainEvents = [];
 
         public IEnumerable<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
         

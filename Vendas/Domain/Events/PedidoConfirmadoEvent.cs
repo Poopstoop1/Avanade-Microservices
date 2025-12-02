@@ -16,16 +16,5 @@
         }
         public PedidoConfirmadoEvent() { }
 
-       
-     public class PedidoItemDto
-        {
-            public Guid ProdutoId { get; set; }
-            public int Quantidade { get; set; }
-            public PedidoItemDto(Guid produtoId, int quantidade)
-            {
-                ProdutoId = produtoId;
-                Quantidade = quantidade;
-            }
-        }
     }
 }
