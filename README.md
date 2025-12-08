@@ -54,24 +54,22 @@ Trata-se de um Microserviços de Sistema de Estoque e Vendas com API Gateway. Es
 
 - **API Gateway**
 
-  - `YARP (Reverse Proxy)`: Utilizado no API Gateway para roteamento, balanceamento e agregação de chamadas aos microserviços.
+  - `YARP (Reverse Proxy)`: Utilizado no API Gateway para roteamento e agregação de chamadas aos microserviços.
 
-- **Logs & Monitoramento**
+- **Logs & Monitoramento** ** Em progresso **
 
 - **Documentação & Testes**
 
   - `Swagger / OpenAPI`: Utilizado para documentação e testes interativos das APIs durante o desenvolvimento.
+  - `xUnit`: Framework de testes utilizado para implementação dos testes unitários do domínio e da aplicação.
+  - `Moq` - Mocking para testes
 
 - **Containerização**
 
   - `Docker` - Containerização
   - `Docker Compose` - Orquestração local para RabbitMQ e SQLServer
 
-- **Em Progresso**
 
-  - `xUnit`: Framework de testes utilizado para implementação dos testes unitários do domínio e da aplicação.
-
-  - `Moq` - Mocking para testes
 
 <a id="como-executar"></a>
 
@@ -229,10 +227,10 @@ Atualiza o estoque final (baixa definitiva)
   ✅ Publicação de Eventos RabbitMQ
   ✅ Consumo de mensagens RabbitMQ
   ✅ Swagger
+  ✅ Testes
 
 - **Em progresso e em estudo**
   ✅ Logs estruturados (Serilog)
-  ✅ Testes
 
 ### 🛒 Vendas Service
 
@@ -244,10 +242,10 @@ Atualiza o estoque final (baixa definitiva)
   ✅ Publicação de eventos RabbitMQ
   ✅ Consumo de mensagens RabbitMQ
   ✅ Swagger
+  ✅ Testes
 
 - **Em progresso e em estudo**
   ✅ Logs estruturados (Serilog)
-  ✅ Testes
 
 ### 🌟 Verificação da Instalação
 
@@ -418,7 +416,7 @@ Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token
 ```
 Avanade-Microservices/
 │   ├── 🌐 Gateway/                  # API Gateway
-│   │   ├── Api/                        # Camada de exposição HTTP da aplicação (Web API), Usuario,
+│   │   ├── Api/                        # Camada de exposição HTTP da aplicação (Web API), Usuario, Controller 
 │   │   │   ├── appsettings.json            # Configurações de conexão com o banco, JWT e YARP (API Gateway)
 │   │   │   ├── Program.cs                  # Configuração inicial da aplicação
 │   │   │   └── Startup.cs                  # Registro de serviços, injeções de dependência e inicialização de componentes
@@ -427,13 +425,13 @@ Avanade-Microservices/
 │   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
 │   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, ValueObjects, Exceptions
 │   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext, MessageBus, Migrations, Repositories, DependencyInjection
-│   │   ├── Tests/            # Em progresso ainda
+│   │   ├── Tests/            # Testes das Camadas Domain e Application
 │   ├── 🛒 Vendas/               # Serviço de Vendas
 │   │   ├── Api/                # WebApi, Controller, Startup, HostedService
 │   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
 │   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, Enums, ValueObjects, Exceptions
 │   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext,Migrations, MessageBus, Repositories
-│   │   ├── Tests/            # Em progresso ainda
+│   │   ├── Tests/            # Testes das Camadas Domain e Application
 ├── 📄 docker-compose.yml             # SQL Server + RabbitMQ
 ├── 📄 Avanade-Microservices.sln     # Solution
 
