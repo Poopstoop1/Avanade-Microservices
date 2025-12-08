@@ -19,6 +19,12 @@ namespace Domain.Entities
 
         public Pedido(Guid usuarioId, List<PedidoItem> itens)
         {
+            if (usuarioId == Guid.Empty)
+                throw new ArgumentException("Usuário inválido.");
+
+            if (itens == null || itens.Count == 0)
+                throw new ArgumentException("O pedido deve conter ao menos um item.");
+
             Id = Guid.NewGuid();
             UsuarioId = usuarioId;
             Itens = itens;

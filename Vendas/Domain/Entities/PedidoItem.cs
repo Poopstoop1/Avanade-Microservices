@@ -20,10 +20,23 @@ namespace Domain.Entities
 
         public PedidoItem(Guid produtoId, string nomeProduto, int quantidade, Preco preco)
         {
+            if (produtoId == Guid.Empty)
+                throw new ArgumentException("Produto inválido.");
+
+            if (string.IsNullOrWhiteSpace(nomeProduto))
+                throw new ArgumentException("Nome do produto é obrigatório.");
+
+            if (quantidade <= 0)
+                throw new ArgumentException("Quantidade deve ser maior que zero.");
+
+
             ProdutoId = produtoId;
             NomeProduto = nomeProduto;
             Quantidade = quantidade;
             PrecoUnitario = preco.Valor;
+
+            if(PrecoUnitario < 0)
+                throw new ArgumentException("Preco Unitario deve ser maior que zero.");
         }
     
     }
