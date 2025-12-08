@@ -61,4 +61,28 @@ public class PedidoTests
         // Assert
         Assert.Equal(PedidoStatus.Cancelado, pedido.Status);
     }
+
+    [Fact]
+    public void Pedido_CriarPedido_SemItens_DeveLancarExcecao()
+    {
+        // Arrange
+        var usuarioId = Guid.NewGuid();
+        List<PedidoItem> itens = [];
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new Pedido(usuarioId, itens));
+    }
+
+    [Fact]
+    public void Pedido_UsuarioInvalido_DeveLancarExcecao()
+    {
+        // Arrange
+        var invalidUsuarioId = Guid.Empty;
+        List<PedidoItem> itens =
+        [
+            new PedidoItem(Guid.NewGuid(), "Produto A", 2, new Preco(10.0m))
+        ];
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new Pedido(invalidUsuarioId, itens));
+    }
+
 }

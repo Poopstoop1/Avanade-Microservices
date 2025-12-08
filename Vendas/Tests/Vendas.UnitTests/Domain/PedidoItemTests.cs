@@ -39,4 +39,53 @@ public class PedidoItemTests
         Assert.Equal(50.0m, subtotal);
     }
 
+    [Fact]
+    public void PedidoItem_CriarPedidoItem_ComQuantidadeInvalida_DeveLancarExcecao()
+    {
+        // Arrange
+        var produtoId = Guid.NewGuid();
+        var nomeProduto = "Produto Teste";
+        var quantidade = 0;
+        var preco = new Preco(10.0m);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new PedidoItem(produtoId, nomeProduto, quantidade, preco));
+    }
+
+    [Fact]
+    public void PedidoItem_CriarPedidoItem_ComPrecoNegativo_DeveLancarExcecao()
+    {
+        // Arrange
+        var produtoId = Guid.NewGuid();
+        var nomeProduto = "Produto Teste";
+        var quantidade = 2;
+        var preco = new Preco(-5.0m);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new PedidoItem(produtoId, nomeProduto, quantidade, preco));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void PedidoItem_CriarPedidoItem_ComNomeProdutoInvalido_DeveLancarExcecao(string nomeProduto)
+    {
+        // Arrange
+        var produtoId = Guid.NewGuid();
+        var quantidade = 2;
+        var preco = new Preco(10.0m);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new PedidoItem(produtoId, nomeProduto, quantidade, preco));
+    }
+
+    [Fact]
+    public void PedidoItem_CriarPedidoItem_ComIdVazio_DeveLancarExcecao()
+    {
+        // Arrange
+        var produtoId = Guid.Empty;
+        var nomeProduto = "Produto Teste";
+        var quantidade = 2;
+        var preco = new Preco(10.0m);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new PedidoItem(produtoId, nomeProduto, quantidade, preco));
+    }
 }

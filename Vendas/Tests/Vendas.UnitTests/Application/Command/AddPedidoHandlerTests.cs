@@ -44,95 +44,18 @@ public class AddPedidoHandlerTests
     }
 
     [Fact]
-    public async Task AddPedido_ComItensVazios_DeveLancarExcecao()
+    public async Task PedidoInvalido_NaoDeveChamarRepository()
     {
         // Arrange
         var usuarioId = Guid.NewGuid();
         var mockRepository = new Mock<IPedidoRepository>();
         var handler = new AddPedidoHandler(mockRepository.Object);
-        var command = new AddPedido(usuarioId, []);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() =>
-            handler.Handle(command, CancellationToken.None));
-
-        mockRepository.Verify(
-            x => x.AddAsync(It.IsAny<Pedido>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task AddPedido_ComPrecoUnitarioNegativo_DeveLancarExcecao()
-    {
-        // Arrange
-        var usuarioId = Guid.NewGuid();
-        var mockRepository = new Mock<IPedidoRepository>();
-        var handler = new AddPedidoHandler(mockRepository.Object);
-        var command = new AddPedido(usuarioId,
-        [
-            new ()
-            {
-                ProdutoId = Guid.NewGuid(),
-                NomeProduto = "Produto A",
-                Quantidade = 1,
-                PrecoUnitario = -10.0m
-            }
-        ]);
+        var command = new AddPedido(usuarioId, []); // Lista vazia de itens
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() =>
             handler.Handle(command, CancellationToken.None));
         mockRepository.Verify(
-            x => x.AddAsync(It.IsAny<Pedido>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    } 
-
-    [Fact]
-    public async Task AddPedido_ComQuantidadeNegativa_DeveLancarExcecao()
-    {
-        // Arrange
-        var usuarioId = Guid.NewGuid();
-        var mockRepository = new Mock<IPedidoRepository>();
-        var handler = new AddPedidoHandler(mockRepository.Object);
-        var command = new AddPedido(usuarioId,
-        [
-            new ()
-            {
-                ProdutoId = Guid.NewGuid(),
-                NomeProduto = "Produto A",
-                Quantidade = -1,
-                PrecoUnitario = 10.0m
-            }
-        ]);
-        // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() =>
-            handler.Handle(command, CancellationToken.None));
-        mockRepository.Verify(
-            x => x.AddAsync(It.IsAny<Pedido>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task AddPedido_ComUsuarioIdVazio_DeveLancarExcecao()
-    {
-        // Arrange
-        var mockRepository = new Mock<IPedidoRepository>();
-        var handler = new AddPedidoHandler(mockRepository.Object);
-        var command = new AddPedido(Guid.Empty,
-        [
-            new ()
-            {
-                ProdutoId = Guid.NewGuid(),
-                NomeProduto = "Produto A",
-                Quantidade = 1,
-                PrecoUnitario = 10.0m
-            }
-        ]);
-        // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() =>
-            handler.Handle(command, CancellationToken.None));
-        mockRepository.Verify(
-            x => x.AddAsync(It.IsAny<Pedido>(), It.IsAny<CancellationToken>()),
-            Times.Never);
+            pr => pr.AddAsync(It.IsAny<Pedido>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
 }
