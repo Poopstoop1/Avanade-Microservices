@@ -15,6 +15,18 @@ namespace Domain.Entities
 
         public Produto(string nome, string descricao, decimal preco, int quantidade)
         {
+            if (string.IsNullOrWhiteSpace(nome))
+                throw new ArgumentException("Nome não pode ser vazio ou nulo", nameof(nome));
+
+            if (string.IsNullOrWhiteSpace(descricao))
+                throw new ArgumentException("Descrição não pode ser vazia ou nula", nameof(descricao));
+
+            if (quantidade < 0)
+                throw new ArgumentException("Quantidade não pode ser negativa", nameof(quantidade));
+
+            if(preco < 0)
+                throw new ArgumentException("Preço não pode ser negativo", nameof(preco));
+
             Id = Guid.NewGuid();
             Nome = nome;
             Descricao = descricao;
@@ -22,7 +34,6 @@ namespace Domain.Entities
             Quantidade = quantidade;
         }
         private Produto() { }
-
 
         public void Reservar(int quantidade)
         {

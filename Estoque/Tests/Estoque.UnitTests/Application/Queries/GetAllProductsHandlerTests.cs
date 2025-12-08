@@ -5,7 +5,7 @@ using Application.Queries.Handlers;
 using Application.Queries;
 namespace Estoque.UnitTests.Application.Queries;
 
-public class GetAllProductsTest
+public class GetAllProductsHandlerTests
 {
 
     [Fact]

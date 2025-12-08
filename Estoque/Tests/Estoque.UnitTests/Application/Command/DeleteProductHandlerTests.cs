@@ -6,7 +6,7 @@ using Moq;
 
 namespace Estoque.UnitTests.Application.Command;
 
-public class DeleteProductTest
+public class DeleteProductHandlerTests
 {
 
     [Fact]

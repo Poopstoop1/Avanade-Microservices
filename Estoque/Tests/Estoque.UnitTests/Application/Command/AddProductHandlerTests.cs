@@ -6,7 +6,7 @@ using Domain.Entities;
 
 namespace Estoque.UnitTests.Application.Command;
 
-public class AddProductTest
+public class AddProductHandlerTests
 {
 
     [Fact]
@@ -27,5 +27,24 @@ public class AddProductTest
             pr => pr.AddAsync(It.IsAny<Produto>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
+    [Fact]
+    public async Task ProdutoInvalido_NaoDeveChamarRepository()
+    {
+        //Arrange
+        var produtoRepositoryMock = new Mock<IProdutoRepository>();
 
+        var handler = new AddProductHandler(produtoRepositoryMock.Object);
+
+        var command = new AddProduct("", "", -10m, -100);
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() =>
+            handler.Handle(command, CancellationToken.None)
+        );
+
+        produtoRepositoryMock.Verify(pr =>
+            pr.AddAsync(It.IsAny<Produto>(), It.IsAny<CancellationToken>()),
+            Times.Never
+        );
+    }
 }

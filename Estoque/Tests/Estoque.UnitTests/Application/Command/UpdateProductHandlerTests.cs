@@ -7,7 +7,7 @@ using Domain.IRepository;
 
 namespace Estoque.UnitTests.Application.Command;
 
-public class UpdateProductTest
+public class UpdateProductHandlerTests
 {
     [Fact]
     public async Task ProdutoExistente_DeveChamarUpdateAsync()

@@ -7,7 +7,7 @@ using Application.Queries.Handlers;
 
 namespace Estoque.UnitTests.Application.Queries;
 
-public class GetProductByIdTest
+public class GetProductByIdHandlerTests
 {
     [Fact]
     public async Task UmProduto_DeveRetornarUmProduto()
