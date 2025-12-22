@@ -27,6 +27,46 @@
 Projeto foi construído para um Desafio técnico da Avanade.
 Trata-se de um Microserviços de Sistema de Estoque e Vendas com API Gateway. Esse projeto foi construído com as melhores práticas de arquitetura moderna utilizando Clean Architecture, CQRS, DDD e EDA.
 
+### **Arquitetura Proposta**
+- Microserviço 1 (Gestão de Estoque): 
+Responsável por cadastrar produtos, controlar o estoque e fornecer informações sobre a quantidade disponível. 
+
+- Microserviço 2 (Gestão de Vendas): 
+Responsável por gerenciar os pedidos e interagir com o serviço de estoque para verificar a disponibilidade de produtos ao realizar uma venda. 
+
+- API Gateway: 
+Roteamento das requisições para os microserviços adequados. Este serviço atua como o ponto de entrada para todas as chamadas de API. 
+
+- RabbitMQ: 
+Usado para comunicação assíncrona entre os microserviços, como notificações de vendas que impactam o estoque. 
+
+- Autenticação com JWT: 
+Garantir que somente usuários autenticados possam realizar ações de vendas ou consultar o estoque.
+
+#### **Funcionalidades Requeridas**
+
+- **Microserviço 1 (Gestão de Estoque)**: 
+
+Cadastro de Produtos: Adicionar novos produtos com nome, descrição, preço e quantidade em estoque. 
+
+Consulta de Produtos: Permitir que o usuário consulte o catálogo de produtos e a quantidade disponível em estoque. 
+
+Atualização de Estoque: O estoque deve ser atualizado quando ocorrer uma venda (integração com o Microserviço de Vendas). 
+
+- **Microserviço 2 (Gestão de Vendas)**: 
+
+Criação de Pedidos: Permitir que o cliente faça um pedido de venda, com a validação do estoque antes de confirmar a compra. 
+
+Consulta de Pedidos: Permitir que o usuário consulte o status dos pedidos realizados. 
+
+Notificação de Venda: Quando um pedido for confirmado, o serviço de vendas deve notificar o serviço de estoque sobre a redução do estoque. 
+
+- **Comum aos dois microserviços**: 
+
+Autenticação via JWT: Apenas usuários autenticados podem interagir com os sistemas de vendas ou consultar o estoque. 
+
+API Gateway: Usar um gateway para centralizar o acesso à API, garantindo que as requisições sejam direcionadas ao microserviço correto
+
 <a id="tecnologias"></a>
 
 ## 2. 🔧 Tecnologias usadas
@@ -54,24 +94,22 @@ Trata-se de um Microserviços de Sistema de Estoque e Vendas com API Gateway. Es
 
 - **API Gateway**
 
-  - `YARP (Reverse Proxy)`: Utilizado no API Gateway para roteamento, balanceamento e agregação de chamadas aos microserviços.
+  - `YARP (Reverse Proxy)`: Utilizado no API Gateway para roteamento e agregação de chamadas aos microserviços.
 
-- **Logs & Monitoramento**
+- **Logs & Monitoramento** ** Em progresso **
 
 - **Documentação & Testes**
 
   - `Swagger / OpenAPI`: Utilizado para documentação e testes interativos das APIs durante o desenvolvimento.
+  - `xUnit`: Framework de testes utilizado para implementação dos testes unitários do domínio e da aplicação.
+  - `Moq` - Mocking para testes
 
 - **Containerização**
 
   - `Docker` - Containerização
   - `Docker Compose` - Orquestração local para RabbitMQ e SQLServer
 
-- **Em Progresso**
 
-  - `xUnit`: Framework de testes utilizado para implementação dos testes unitários do domínio e da aplicação.
-
-  - `Moq` - Mocking para testes
 
 <a id="como-executar"></a>
 
@@ -229,10 +267,10 @@ Atualiza o estoque final (baixa definitiva)
   ✅ Publicação de Eventos RabbitMQ
   ✅ Consumo de mensagens RabbitMQ
   ✅ Swagger
+  ✅ Testes
 
 - **Em progresso e em estudo**
   ✅ Logs estruturados (Serilog)
-  ✅ Testes
 
 ### 🛒 Vendas Service
 
@@ -244,10 +282,10 @@ Atualiza o estoque final (baixa definitiva)
   ✅ Publicação de eventos RabbitMQ
   ✅ Consumo de mensagens RabbitMQ
   ✅ Swagger
+  ✅ Testes
 
 - **Em progresso e em estudo**
   ✅ Logs estruturados (Serilog)
-  ✅ Testes
 
 ### 🌟 Verificação da Instalação
 
@@ -418,7 +456,7 @@ Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token
 ```
 Avanade-Microservices/
 │   ├── 🌐 Gateway/                  # API Gateway
-│   │   ├── Api/                        # Camada de exposição HTTP da aplicação (Web API), Usuario,
+│   │   ├── Api/                        # Camada de exposição HTTP da aplicação (Web API), Usuario, Controller 
 │   │   │   ├── appsettings.json            # Configurações de conexão com o banco, JWT e YARP (API Gateway)
 │   │   │   ├── Program.cs                  # Configuração inicial da aplicação
 │   │   │   └── Startup.cs                  # Registro de serviços, injeções de dependência e inicialização de componentes
@@ -427,13 +465,13 @@ Avanade-Microservices/
 │   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
 │   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, ValueObjects, Exceptions
 │   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext, MessageBus, Migrations, Repositories, DependencyInjection
-│   │   ├── Tests/            # Em progresso ainda
+│   │   ├── Tests/            # Testes das Camadas Domain e Application
 │   ├── 🛒 Vendas/               # Serviço de Vendas
 │   │   ├── Api/                # WebApi, Controller, Startup, HostedService
 │   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
 │   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, Enums, ValueObjects, Exceptions
 │   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext,Migrations, MessageBus, Repositories
-│   │   ├── Tests/            # Em progresso ainda
+│   │   ├── Tests/            # Testes das Camadas Domain e Application
 ├── 📄 docker-compose.yml             # SQL Server + RabbitMQ
 ├── 📄 Avanade-Microservices.sln     # Solution
 
