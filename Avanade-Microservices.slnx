@@ -1,0 +1,41 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Estoque/">
+    <Project Path="Estoque/infrastructure/infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Estoque/api/">
+    <Project Path="Estoque/api/API.csproj" />
+  </Folder>
+  <Folder Name="/Estoque/Application/">
+    <Project Path="Estoque/Application/application.csproj" />
+  </Folder>
+  <Folder Name="/Estoque/Domain/">
+    <Project Path="Estoque/Domain/domain.csproj" />
+  </Folder>
+  <Folder Name="/Estoque/Tests/">
+    <Project Path="Estoque/Tests/Estoque.UnitTests/Estoque.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/Gateway/" />
+  <Folder Name="/Gateway/api/">
+    <Project Path="Gateway/api/API.csproj" />
+  </Folder>
+  <Folder Name="/Vendas/">
+    <Project Path="Vendas/infrastructure/infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Vendas/api/">
+    <Project Path="Vendas/api/Vendas.csproj" />
+  </Folder>
+  <Folder Name="/Vendas/Application/">
+    <Project Path="Vendas/Application/application.csproj" />
+  </Folder>
+  <Folder Name="/Vendas/Domain/">
+    <Project Path="Vendas/Domain/domain.csproj" />
+  </Folder>
+  <Folder Name="/Vendas/Tests/">
+    <Project Path="Vendas/Tests/Vendas.UnitTests/Vendas.UnitTests.csproj" />
+  </Folder>
+</Solution>

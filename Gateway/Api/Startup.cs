@@ -42,7 +42,6 @@ namespace Api
             {
                 c.SwaggerDoc("gateway", new() { Title = "API Gateway", Version = "v1" });
 
-
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "Insira o token JWT desta forma: Bearer {seu token}",
