@@ -1,4 +1,7 @@
 using API;
+using API.Extensions;
+using Application;
+using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,15 +14,27 @@ using Microsoft.EntityFrameworkCore;
 */
 
 var builder = WebApplication.CreateBuilder(args);
+#region services
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerDocumentation();
+builder.Services.AddAuthenticationJwt(builder.Configuration);
+builder.Services.AddMessaging(builder.Configuration);
+#endregion
 
-var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
 
+#region AppSettings
 var app = builder.Build();
-
-
-startup.Configure(app, app.Environment);
-
+app.UseHttpsRedirection();
+app.UseRouting();
+app.ApplyMigrations();
+app.UseSwaggerDocumentation(app.Environment);
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+#endregion
 
 #region TesteDatabaseConnection
 app.MapGet("/Teste", async (EstoqueDBContext dbContext) =>
