@@ -1,4 +1,3 @@
-using API;
 using API.Extensions;
 using Application;
 using Infrastructure;
@@ -21,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddAuthenticationJwt(builder.Configuration);
-builder.Services.AddMessaging(builder.Configuration);
+builder.Services.AddMessaging();
 #endregion
 
 

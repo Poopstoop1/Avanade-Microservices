@@ -10,7 +10,6 @@ namespace API.Extensions
 {
     public static class Extensions
     {
-
         public static void ApplyMigrations(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
@@ -46,9 +45,9 @@ namespace API.Extensions
         }
 
         public static IServiceCollection AddMessaging(
-        this IServiceCollection services, IConfiguration configuration)
+        this IServiceCollection services)
         {
-            services.AddMessageBus(configuration);
+            services.AddMessageBus();
             services.AddHostedService<RabbitmqHostedService>();
 
             return services;
