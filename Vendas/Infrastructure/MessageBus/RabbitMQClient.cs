@@ -93,7 +93,6 @@ namespace Infrastructure.MessageBus
                  cancellationToken: cancellationToken
             );
 
-
             // Vincular Fila ao Exchange
             await _channel.QueueBindAsync(
                 queue: routingKey,

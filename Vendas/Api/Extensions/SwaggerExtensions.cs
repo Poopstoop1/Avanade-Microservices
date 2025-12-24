@@ -1,7 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-
-namespace API.Extensions
+namespace Vendas.Extensions
 {
     public static class SwaggerExtensions
     {
@@ -11,9 +10,9 @@ namespace API.Extensions
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Serviço Estoque",
+                    Title = "Serviço Vendas",
                     Version = "v1",
-                    Description = "API para gerenciamento de estoque e produtos."
+                    Description = "API para gerenciamento de Vendas e Pedidos"
                 });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -29,20 +28,18 @@ namespace API.Extensions
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
+                         new OpenApiSecurityScheme
+                         {
+                             Reference = new OpenApiReference
+                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
+                             }
+                         },
+                         Array.Empty<string>()
                     }
-            
                 });
             });
-
             return services;
         }
 
@@ -55,16 +52,12 @@ namespace API.Extensions
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Serviço Estoque v1");
-                    c.DocumentTitle = "Serviço Estoque";
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Serviço Vendas v1");
+                    c.DocumentTitle = "Serviço Vendas";
                 });
             }
-
             return app;
         }
 
     }
-
-
-
 }

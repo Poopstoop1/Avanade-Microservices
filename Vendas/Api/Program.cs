@@ -1,7 +1,9 @@
+using Application;
+using Infrastructure;
 using Infrastructure.Data;
-using Infrastructure.MessageBus;
 using Microsoft.EntityFrameworkCore;
-using Vendas;
+using Vendas.Extensions;
+
 
 
 /*
@@ -12,14 +14,31 @@ using Vendas;
 
 
 var builder = WebApplication.CreateBuilder(args);
+#region services
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerDocumentation();
+builder.Services.AddAuthenticationJwt(builder.Configuration);
+builder.Services.AddMessaging();
+#endregion
 
-var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
 
+
+#region AppSettings
 var app = builder.Build();
+app.UseHttpsRedirection();
+app.UseRouting();
+app.ApplyMigrations();
+app.UseSwaggerDocumentation(app.Environment);
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+#endregion
 
 
-startup.Configure(app, app.Environment);
+
 
 
 
