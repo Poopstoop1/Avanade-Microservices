@@ -25,11 +25,13 @@ namespace Infrastructure
         }
 
 
-        public static IServiceCollection AddMessageBus(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMessageBus(this IServiceCollection services)
         {
+            services.AddSingleton<RabbitMQClient>();
+
             services.AddSingleton<IMessageBusClient>(sp =>
-                 new RabbitMQClient(configuration)
-             );
+                sp.GetRequiredService<RabbitMQClient>()
+            );
 
             services.AddSingleton<IConsumer,EstoqueRejeitadoConsumer>();
 

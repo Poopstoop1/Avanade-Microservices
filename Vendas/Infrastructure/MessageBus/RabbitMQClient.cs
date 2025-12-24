@@ -9,33 +9,36 @@ using System.Text.Json;
 
 namespace Infrastructure.MessageBus
 {
-    public class RabbitMQClient : IMessageBusClient
+    public class RabbitMQClient(IConfiguration config) : IMessageBusClient, IAsyncDisposable
     {
-        private readonly IConnection _connection;
-        private readonly IChannel _channel;
+        private IConnection? _connection;
+        private IChannel? _channel;
+        private ConnectionFactory? _factory;
 
-        public RabbitMQClient(IConfiguration config)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var factory = new ConnectionFactory()
+            _factory = new ConnectionFactory()
             {
                 HostName = config["Rabbit:Host"] ?? "localhost"
             };
 
-            _connection = factory.CreateConnectionAsync("Pedido-Service-Producer").GetAwaiter().GetResult();
-            _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
+            _connection = await _factory.CreateConnectionAsync(cancellationToken);
+            _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
         }
 
-        public Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T, Task> handleMessage)
+        public async Task Subscribe<T>(string exchange, string queue, string routingKey, Func<T, Task> handleMessage)
         {
+            if (_channel is null)
+                throw new InvalidOperationException("RabbitMQ channel não inicializado. ");
 
             // Garantir que exchange exista
-            _channel.ExchangeDeclareAsync(exchange, "direct", durable: true, autoDelete: false).GetAwaiter().GetResult();
+            await _channel.ExchangeDeclareAsync(exchange, "direct", durable: true, autoDelete: false);
 
             // Criar queue específica para o serviço de Vendas
-            _channel.QueueDeclareAsync(queue, durable: true, exclusive: false, autoDelete: false).GetAwaiter().GetResult();
+            await _channel.QueueDeclareAsync(queue, durable: true, exclusive: false, autoDelete: false);
 
             // Bind na routingKey do evento
-            _channel.QueueBindAsync(queue, exchange, routingKey).GetAwaiter().GetResult();
+            await _channel.QueueBindAsync(queue, exchange, routingKey);
 
             // Configurar consumer
             var consumer = new AsyncEventingBasicConsumer(_channel);
@@ -54,7 +57,6 @@ namespace Infrastructure.MessageBus
                         return;
                     }
 
-
                     // Executa lógica do handler passado
                     await handleMessage(messageObj);
 
@@ -63,17 +65,20 @@ namespace Infrastructure.MessageBus
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erro ao processar mensagem: {ex}");
+                    Console.WriteLine($"Erro ao processar mensagem: {ex.Message}");
+                    await _channel.BasicNackAsync(ea.DeliveryTag, false, requeue: true);
                 }
             };
 
             // Consumir mensagens da fila
-            _channel.BasicConsumeAsync(queue, autoAck: false, consumer).GetAwaiter().GetResult();
-            return Task.CompletedTask;
+            await _channel.BasicConsumeAsync(queue, autoAck: false, consumer);
         }
 
         public async Task Publish(object message, string routingKey, string exchange, CancellationToken cancellationToken = default)
         {
+            if (_channel is null)
+                throw new InvalidOperationException("RabbitMQ channel não inicializado. ");
+
             // Declaração do exchange
             await _channel.ExchangeDeclareAsync(
                 exchange: exchange,
@@ -83,28 +88,18 @@ namespace Infrastructure.MessageBus
                 cancellationToken: cancellationToken
             );
 
-            // Declaração da fila
-            await _channel.QueueDeclareAsync(
-                 queue: routingKey,
-                 durable: false,
-                 exclusive: false,
-                 autoDelete: false,
-                 arguments: null,
-                 cancellationToken: cancellationToken
-            );
+            var body = JsonSerializer.SerializeToUtf8Bytes(message);
 
-            // Vincular Fila ao Exchange
-            await _channel.QueueBindAsync(
-                queue: routingKey,
-                exchange: exchange,
-                routingKey: routingKey,
-                cancellationToken: cancellationToken
-            );
+            var properties = new BasicProperties
+            {
+                DeliveryMode = DeliveryModes.Persistent,
+                ContentType = "application/json",
+                MessageId = Guid.NewGuid().ToString(),
+                Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds()),
+                Type = message.GetType().Name
+            };
 
-            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
-            var properties = new BasicProperties();
-
-            await _channel.BasicPublishAsync<BasicProperties>(
+            await _channel.BasicPublishAsync(
                 exchange: exchange,
                 routingKey: routingKey,
                 mandatory: false,
@@ -113,5 +108,15 @@ namespace Infrastructure.MessageBus
                 cancellationToken: cancellationToken
             );
         }
+
+        // Não usei GC.SuppressFinalize, porque não há finalizador na classe
+        public async ValueTask DisposeAsync()
+        {
+            if (_channel is not null)
+                await _channel.CloseAsync();
+            if (_connection is not null)
+                await _connection.CloseAsync();
+        }
+
     }
 }
