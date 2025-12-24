@@ -1,4 +1,4 @@
-# 🛍️ Desafio Técnico - Microserviços E-commerce
+# Desafio Técnico - Microserviços E-commerce
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat&logo=.net)](https://dotnet.microsoft.com/)
 [![SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-17.x-blue?logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/pt-br/sql-server)
@@ -7,69 +7,68 @@
 
 ---
 
-## 📋 Índice
+## Índice
 
-- [1. 📖 Sobre o Projeto](#sobre) </br>
-- [2. 🔧 Tecnologias usadas](#tecnologias)
-- [3. 🚀 Como Executar](#como-executar)
-- [4. 🏗️ Arquitetura](#arquitetura)
-- [5. 🧩 Componentes](#componentes)
-- [6. 🗄️ Banco de Dados](#banco-de-dados)
-- [7. 🔌 API Endpoints](#api-endpoints)
-- [8. 🐰 RabbitMQ](#rabbitmq)
-- [9. 📁 Estrutura do Projeto](#estrutura)
-- [10. 📚 Documentação Adicional](#documentacao)
+- [1. Sobre o Projeto](#sobre) </br>
+- [2. Tecnologias usadas](#tecnologias)
+- [3. Como Executar](#como-executar)
+- [4. Arquitetura](#arquitetura)
+- [5. Componentes](#componentes)
+- [6. API Endpoints](#api-endpoints)
+- [7. RabbitMQ](#rabbitmq)
+- [8. Documentação Adicional](#documentacao)
 
 <a id="sobre"></a>
 
-## ​1. 📖 Sobre o Projeto
+## ​1. Sobre o Projeto
 
-Projeto foi construído para um Desafio técnico da Avanade.
-Trata-se de um Microserviços de Sistema de Estoque e Vendas com API Gateway. Esse projeto foi construído com as melhores práticas de arquitetura moderna utilizando Clean Architecture, CQRS, DDD e EDA.
+Projeto foi construído como estudo e para um Desafio técnico da Avanade.
+Trata-se de um Microserviços de Sistema de Estoque e Vendas com API Gateway. Esse projeto foi construído com as melhores práticas de arquitetura moderna utilizando Clean Architecture, CQRS, DDD e EDA. Esse projeto foi melhorado aos poucos com estudo e referências como Eshop da Microsoft.
 
 ### **Arquitetura Proposta**
-- Microserviço 1 (Gestão de Estoque): 
-Responsável por cadastrar produtos, controlar o estoque e fornecer informações sobre a quantidade disponível. 
 
-- Microserviço 2 (Gestão de Vendas): 
-Responsável por gerenciar os pedidos e interagir com o serviço de estoque para verificar a disponibilidade de produtos ao realizar uma venda. 
+- Microserviço 1 (Gestão de Estoque):
+  Responsável por cadastrar produtos, controlar o estoque e fornecer informações sobre a quantidade disponível.
 
-- API Gateway: 
-Roteamento das requisições para os microserviços adequados. Este serviço atua como o ponto de entrada para todas as chamadas de API. 
+- Microserviço 2 (Gestão de Vendas):
+  Responsável por gerenciar os pedidos e interagir com o serviço de estoque para verificar a disponibilidade de produtos ao realizar uma venda.
 
-- RabbitMQ: 
-Usado para comunicação assíncrona entre os microserviços, como notificações de vendas que impactam o estoque. 
+- API Gateway:
+  Roteamento das requisições para os microserviços adequados. Este serviço atua como o ponto de entrada para todas as chamadas de API.
 
-- Autenticação com JWT: 
-Garantir que somente usuários autenticados possam realizar ações de vendas ou consultar o estoque.
+- RabbitMQ:
+  Usado para comunicação assíncrona entre os microserviços, como notificações de vendas que impactam o estoque.
+
+- Autenticação com JWT:
+  Garantir que somente usuários autenticados possam realizar ações de vendas ou consultar o estoque.
 
 #### **Funcionalidades Requeridas**
 
-- **Microserviço 1 (Gestão de Estoque)**: 
+- **Microserviço 1 (Gestão de Estoque)**:
 
-Cadastro de Produtos: Adicionar novos produtos com nome, descrição, preço e quantidade em estoque. 
+Cadastro de Produtos: Adicionar novos produtos com nome, descrição, preço e quantidade em estoque.
 
-Consulta de Produtos: Permitir que o usuário consulte o catálogo de produtos e a quantidade disponível em estoque. 
+Consulta de Produtos: Permitir que o usuário consulte o catálogo de produtos e a quantidade disponível em estoque.
 
-Atualização de Estoque: O estoque deve ser atualizado quando ocorrer uma venda (integração com o Microserviço de Vendas). 
+Atualização de Estoque: O estoque deve ser atualizado quando ocorrer uma venda (integração com o Microserviço de Vendas).
 
-- **Microserviço 2 (Gestão de Vendas)**: 
+- **Microserviço 2 (Gestão de Vendas)**:
 
-Criação de Pedidos: Permitir que o cliente faça um pedido de venda, com a validação do estoque antes de confirmar a compra. 
+Criação de Pedidos: Permitir que o cliente faça um pedido de venda, com a validação do estoque antes de confirmar a compra.
 
-Consulta de Pedidos: Permitir que o usuário consulte o status dos pedidos realizados. 
+Consulta de Pedidos: Permitir que o usuário consulte o status dos pedidos realizados.
 
-Notificação de Venda: Quando um pedido for confirmado, o serviço de vendas deve notificar o serviço de estoque sobre a redução do estoque. 
+Notificação de Venda: Quando um pedido for confirmado, o serviço de vendas deve notificar o serviço de estoque sobre a redução do estoque.
 
-- **Comum aos dois microserviços**: 
+- **Comum aos dois microserviços**:
 
-Autenticação via JWT: Apenas usuários autenticados podem interagir com os sistemas de vendas ou consultar o estoque. 
+Autenticação via JWT: Apenas usuários autenticados podem interagir com os sistemas de vendas ou consultar o estoque.
 
 API Gateway: Usar um gateway para centralizar o acesso à API, garantindo que as requisições sejam direcionadas ao microserviço correto
 
 <a id="tecnologias"></a>
 
-## 2. 🔧 Tecnologias usadas
+## 2. Tecnologias usadas
 
 - **Backend Framework**:
 
@@ -109,17 +108,15 @@ API Gateway: Usar um gateway para centralizar o acesso à API, garantindo que as
   - `Docker` - Containerização
   - `Docker Compose` - Orquestração local para RabbitMQ e SQLServer
 
-
-
 <a id="como-executar"></a>
 
-## 3. 🚀 Como Executar
+## 3. Como Executar
 
-### 🔧 Pré-requisitos
+### Pré-requisitos
 
 Certifique-se de ter instalado:  
-✅ [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)  
-✅ [Docker Desktop](https://www.docker.com/products/docker-desktop) (recomendado)
+ [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)  
+ [Docker Desktop](https://www.docker.com/products/docker-desktop) (recomendado)
 
 ```bash
 # 1 Clone o repositório
@@ -152,18 +149,18 @@ dotnet build
 
 <a id="arquitetura"></a>
 
-## 4. 🏗️ Arquitetura
+## 4. Arquitetura
 
 ### Diagrama da Arquitetura
 
 ```mermaid
 graph TB
-    Cliente[👤 Usuarios]
-    Gateway[🌐 API Gateway]
+    Cliente[Usuarios]
+    Gateway[API Gateway]
 
-    Estoque[📦 Estoque Service<br/>Consumers:<br/>- pedido-criado<br/>- pedido.confirmado<br/><br/>Producers:<br/>- estoque_pedido_reservado<br/>- estoque_pedido_confirmado<br/>- estoque-indisponivel]
+    Estoque[Estoque Service<br/>Consumers:<br/>- pedido-criado<br/>- pedido.confirmado<br/><br/>Producers:<br/>- estoque_pedido_reservado<br/>- estoque_pedido_confirmado<br/>- estoque-indisponivel]
 
-    Vendas[🛒 Vendas Service<br/>Producers:<br/>- pedido-criado<br/>- pedido.confirmado<br/>- pedido_cancelado<br/><br/>Consumers:<br/>-estoque-indisponivel]
+    Vendas[Vendas Service<br/>Producers:<br/>- pedido-criado<br/>- pedido.confirmado<br/>- pedido_cancelado<br/><br/>Consumers:<br/>-estoque-indisponivel]
 
     subgraph "📬 RabbitMQ"
         queue1[(pedido-criado)]
@@ -197,19 +194,19 @@ graph TB
 
 ### Fluxo de Comunicação
 
-**📱 Usuarios(Clientes)** → Autentica via **API Gateway**
-**🌐 API Gateway(Yarp)** → Roteia requisições para microserviços
-**🔄 Comunicação assíncrona** Comunicação Assíncrona entre serviços via RabbitMQ
+** Usuarios(Clientes)** → Autentica via **API Gateway**
+** API Gateway(Yarp)** → Roteia requisições para microserviços
+** Comunicação assíncrona** Comunicação Assíncrona entre serviços via RabbitMQ
 
 1️⃣ Fluxo: Criação do Pedido
 
-**🛒 Vendas Service**
+** Vendas Service**
 
 - Cria o pedido inicial
 
 - Publica o evento pedido-criado no RabbitMQ
 
-**📦 Estoque Service**
+** Estoque Service**
 
 - Consome o evento pedido-criado
 
@@ -219,7 +216,7 @@ graph TB
 
 - Se o estoque for insuficiente, publica estoque-indisponivel
 
-**🛒 Vendas Service**
+**Vendas Service**
 
 - Consome estoque-indisponivel
 
@@ -227,7 +224,7 @@ graph TB
 
 2️⃣ Fluxo: Confirmação do Pedido
 
-🛒 Vendas Service
+Vendas Service
 
 Após validação bem-sucedida do estoque
 
@@ -235,7 +232,7 @@ Atualiza o pedido para status Confirmado
 
 Publica o evento pedido-confirmado
 
-📦 Estoque Service
+Estoque Service
 
 Consome pedido-confirmado
 
@@ -243,136 +240,74 @@ Atualiza o estoque final (baixa definitiva)
 
 <a id="componentes"></a>
 
-## 5. 🧩 Componentes
+## 5. Componentes
 
-### 🌐 API Gateway
+### API Gateway
 
 - **Responsabilidade**: Ponto de entrada único, autenticação, roteamento
 - **Porta**: 5035
 - **Funcionalidades**:
-  ✅ Autenticação JWT
-  ✅ Crud de Usuarios
-  ✅ Roteamento via YARP
-  ✅ Swagger UI
-  ✅ Swagger com multiplos documentos
+  Autenticação JWT
+  Crud de Usuarios
+  Roteamento via YARP
+  Swagger UI
+  Swagger com multiplos documentos
 
-### 📦 Estoque Service
+### Estoque Service
 
 - **Responsabilidade**: Gerenciamento de produtos e estoque
 - **Porta**: 5285
 - **Funcionalidades**:
-  ✅ CRUD de produtos
-  ✅ Controle de estoque
-  ✅ Validação de disponibilidade
-  ✅ Publicação de Eventos RabbitMQ
-  ✅ Consumo de mensagens RabbitMQ
-  ✅ Swagger
-  ✅ Testes
+  CRUD de produtos
+  Controle de estoque
+  Validação de disponibilidade
+  Publicação de Eventos RabbitMQ
+  Consumo de mensagens RabbitMQ
+  Swagger
+  Testes
 
 - **Em progresso e em estudo**
-  ✅ Logs estruturados (Serilog)
+  Logs estruturados (Serilog)
 
-### 🛒 Vendas Service
+### Vendas Service
 
 - **Responsabilidade**: Gerenciamento de vendas e pedidos
 - **Porta**: 5156
 - **Funcionalidades**:
-  ✅ CRUD de pedidos
-  ✅ Cálculo de totais
-  ✅ Publicação de eventos RabbitMQ
-  ✅ Consumo de mensagens RabbitMQ
-  ✅ Swagger
-  ✅ Testes
+  CRUD de pedidos
+  Cálculo de totais
+  Publicação de eventos RabbitMQ
+  Consumo de mensagens RabbitMQ
+  Swagger
+  Testes
 
 - **Em progresso e em estudo**
-  ✅ Logs estruturados (Serilog)
+  Logs estruturados (Serilog)
 
-### 🌟 Verificação da Instalação
+### Verificação da Instalação
 
 Após a execução, verifique se os serviços estão rodando:
 
-| Serviço                    | URL                                                               | Status |
-| -------------------------- | ----------------------------------------------------------------- | ------ |
-| � **Gateway**              | http://localhost:5038/swagger                                     | ✅     |
-| � **Gateway**              | http://localhost:5038/swagger/index.html?urls.primaryName=Vendas  | ✅     |
-| � **Gateway**              | http://localhost:5038/swagger/index.html?urls.primaryName=Estoque | ✅     |
-| 📦 **Estoque Service**     | http://localhost:5285/swagger                                     | ✅     |
-| 🛒 **Vendas Service**      | http://localhost:5156/swagger                                     | ✅     |
-| 🐰 **RabbitMQ Management** | http://localhost:15672                                            | ✅     |
+| Serviço                 | URL                                                               | Status |
+| ----------------------- | ----------------------------------------------------------------- | ------ |
+| **Gateway**             | http://localhost:5038/swagger                                     | ✅     |
+| **Gateway**             | http://localhost:5038/swagger/index.html?urls.primaryName=Vendas  | ✅     |
+| **Gateway**             | http://localhost:5038/swagger/index.html?urls.primaryName=Estoque | ✅     |
+| **Estoque Service**     | http://localhost:5285/swagger                                     | ✅     |
+| **Vendas Service**      | http://localhost:5156/swagger                                     | ✅     |
+| **RabbitMQ Management** | http://localhost:15672                                            | ✅     |
 
-**🔑 Credenciais:**
+**Credenciais:**
 
 - **RabbitMQ**: `guest` / `guest`
 
 ---
 
-<a id="banco-de-dados"></a>
-
-## 6. 🗄️ Banco de Dados
-
-### 📊 Configuração Geral
-
-#### **Credenciais SQLServer:**
-
-- 🔑 **Servidor** - `localhost,1433`
-- 🔑 **Usuário**: `sa`
-- 🔐 **Senha**: `YourStrong@2025`
-- 🌐 **Host**: `localhost`
-- 🔌 **Porta**: `1433`
-
-### 🗃️ Estrutura dos Bancos
-
-#### 🔐 Usuario_DB (API Gateway)
-
-```sql
--- Tabela de usuários para autenticação
-Usuarios
-├── Id (PK, uniqueIdentifier, not null)
-├── Username (nvarchar(200), not null)
-├── Email (nvarchar(200), not null)
-├── PasswordHash (nvarchar(max), not null)
-└── Role (nvarchar(50), not null)
-```
-
-#### 📦 Estoque (Estoque Service)
-
-```sql
--- Tabela de produtos
-Produtos
-├── Id (PK, uniqueidentifier, not null)
-├── Name (nvarchar(200))
-├── Descricao (nvarchar(200), not null)
-├── Preco (decimal(18,2), not null)
-├── Quantidade (int, not null)
-└── QuantidadeReservada(int, not null)
-```
-
-#### 🛒 Vendas_DB (Vendas Service)
-
-```sql
--- Tabela de pedidos
-Pedidos
-├── Id (PK, uniqueidentifier, not null)
-├── UsuarioId (uniqueidentifier, not null)
-├── DataCriacao (datatime2(7)), not null)
-├── ValorTotal (decimal(18,2), not null)
-└── Status (int, not null)
-
--- Tabela de itens do pedido
-PedidoItens
-├── Id (PK, uniqueidentifier, not null)
-├── PedidoId (PK, uniqueidentifier, not null)
-├── ProdutoId (uniqueidentifier, not null)
-├── NomeProduto (nvarchar(200), not null)
-├── Quantidade (int, not null)
-└── PrecoUnitario(decimal(18,2), not null)
-```
-
 <a id="api-endpoints"></a>
 
-## 7. 🔌 API Endpoints {#api-endpoints}
+## 6. API Endpoints {#api-endpoints}
 
-### 🔐 Autenticação
+### Autenticação
 
 Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token para acessar outras rotas
 
@@ -406,40 +341,40 @@ Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token
 
 <a id="rabbitmq"></a>
 
-## 8. 🐰 RabbitMQ
+## 7. RabbitMQ
 
-### 📋 Configuração
+### Configuração
 
 #### **Conexão:**
 
-- 🌐 **Host**: `localhost`
-- 🔌 **Porta AMQP**: `15672`
-- 🖥️ **Management UI**: `15672`
-- 🔑 **Usuário**: `guest`
-- 🔐 **Senha**: `guest`
+- **Host**: `localhost`
+- **Porta AMQP**: `15672`
+- **Management UI**: `15672`
+- **Usuário**: `guest`
+- **Senha**: `guest`
 
-### 🔄 Fluxo de Mensagens
+### Fluxo de Mensagens
 
-#### **🛒 Cliente cria pedido** → Vendas Service
+#### ** Cliente cria pedido** → Vendas Service
 
-- **📝 Vendas Service** → Persiste pedido no banco
-- **📤 Vendas Service**→ Publica mensagem na fila pedido-criado
-- **📥 Estoque Service** → Consome pedido-criado
-- **📦 Estoque Service** → Verifica e reserva estoque
+- ** Vendas Service** → Persiste pedido no banco
+- ** Vendas Service**→ Publica mensagem na fila pedido-criado
+- ** Estoque Service** → Consome pedido-criado
+- ** Estoque Service** → Verifica e reserva estoque
 
-#### **❌ Se o estoque estiver indisponível**
+#### ** Se o estoque estiver indisponível**
 
-- **📤 Estoque Service** → Publica estoque-indisponivel
-- **📥 Vendas Service** → Consome estoque-indisponivel
-- **🛑 Vendas Service** → Atualiza pedido para “Cancelado”
+- **Estoque Service** → Publica estoque-indisponivel
+- **Vendas Service** → Consome estoque-indisponivel
+- **Vendas Service** → Atualiza pedido para “Cancelado”
 
-#### **✔️ Fluxo de Confirmação**
+#### ** Fluxo de Confirmação**
 
-- **🛒 Vendas Service** → Confirma pedido
-- **📤 Vendas Service** → Publica pedido.confirmado
-- **📥 Estoque Service** → Consome pedido.confirmado
-- **📦 Estoque Service** → Baixa estoque definitivo
-- **🛒 Vendas Service** → Finaliza o pedido
+- **Vendas Service** → Confirma pedido
+- **Vendas Service** → Publica pedido.confirmado
+- **Estoque Service** → Consome pedido.confirmado
+- **Estoque Service** → Baixa estoque definitivo
+- **Vendas Service** → Finaliza o pedido
 
 #### Interface Web:
 
@@ -449,100 +384,8 @@ Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token
 
 ---
 
-<a id="estrutura"></a>
-
-## 9. 📁 Estrutura do Projeto
-
-```
-Avanade-Microservices/
-│   ├── 🌐 Gateway/                  # API Gateway
-│   │   ├── Api/                        # Camada de exposição HTTP da aplicação (Web API), Usuario, Controller 
-│   │   │   ├── appsettings.json            # Configurações de conexão com o banco, JWT e YARP (API Gateway)
-│   │   │   ├── Program.cs                  # Configuração inicial da aplicação
-│   │   │   └── Startup.cs                  # Registro de serviços, injeções de dependência e inicialização de componentes
-│   ├── 📦 Estoque/                # Serviço de Estoque
-│   │   ├── Api/                # WebApi, Controller, Startup, HostedService, DB
-│   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
-│   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, ValueObjects, Exceptions
-│   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext, MessageBus, Migrations, Repositories, DependencyInjection
-│   │   ├── Tests/            # Testes das Camadas Domain e Application
-│   ├── 🛒 Vendas/               # Serviço de Vendas
-│   │   ├── Api/                # WebApi, Controller, Startup, HostedService
-│   │   ├── Application/          # Camada Application, Command, Queries, Interface, Consumers, DTOs, DependencyInjection
-│   │   ├── Domain/                   # Camada Core, Entity, Event, IRepository, Enums, ValueObjects, Exceptions
-│   │   ├── Infrastructure/            # Camada Infrastrucure, DBContext,Migrations, MessageBus, Repositories
-│   │   ├── Tests/            # Testes das Camadas Domain e Application
-├── 📄 docker-compose.yml             # SQL Server + RabbitMQ
-├── 📄 Avanade-Microservices.sln     # Solution
-
-```
-
-### 🎯 Arquivos de Configuração Principais
-
-#### appsettings.json (Exemplo - API Gateway)
-
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Debug",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-
-  "ConnectionStrings": {
-    "GatewayConnection": "Server=localhost,1433;Database=Usuario;User ID=sa;Password=YourStrong@2025;TrustServerCertificate=True;"
-  },
-
-  "AllowedHosts": "*",
-
-  "JwtSettings": {
-    "Secret": "NDlkZTIxZjQtOTg1OC00YzEwLTk3NDctOTYzMjkyODlkNWM3",
-    "Issuer": "SeuIssuer",
-    "Audience": "SeuAudience",
-    "ExpiryMinutes": 60
-  },
-
-  "ReverseProxy": {
-    "Routes": {
-      "estoque_route": {
-        "ClusterId": "estoque_cluster",
-        "Match": {
-          "Path": "/estoque/{**catch-all}"
-        },
-        "Transforms": [{ "PathRemovePrefix": "/estoque" }]
-      },
-      "vendas_route": {
-        "ClusterId": "vendas_cluster",
-        "Match": {
-          "Path": "/vendas/{**catch-all}"
-        },
-        "Transforms": [{ "PathRemovePrefix": "/vendas" }]
-      }
-    },
-
-    "Clusters": {
-      "estoque_cluster": {
-        "Destinations": {
-          "dest1": {
-            "Address": "http://localhost:5285/"
-          }
-        }
-      },
-      "vendas_cluster": {
-        "Destinations": {
-          "dest1": {
-            "Address": "http://localhost:5156/"
-          }
-        }
-      }
-    }
-  }
-}
-```
-
 <a id="documentacao"></a>
 
-## 10. 📚 Documentação Adicional
+## 8. Documentação Adicional
 
 Se você tem interesse em contribuir ou se deseja ajudar a melhorar o projeto, fique à vontade para enviar um pull request!
