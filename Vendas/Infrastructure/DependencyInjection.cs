@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Application.Interfaces;
 using Infrastructure.MessageBus.Consumers;
 using Domain.IRepository;
+using infrastructure.CacheStorage;
 
 namespace Infrastructure
 {
@@ -35,6 +36,19 @@ namespace Infrastructure
 
             services.AddSingleton<IConsumer,EstoqueRejeitadoConsumer>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddRedisCache(this IServiceCollection services)
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+                options.InstanceName = "VendasCache";
+            });
+
+            services.AddTransient<ICacheService, CacheService>();
+            
             return services;
         }
     }

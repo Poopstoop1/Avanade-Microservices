@@ -22,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddAuthenticationJwt(builder.Configuration);
 builder.Services.AddMessaging();
+builder.Services.AddRedisCache();
 #endregion
 
 
