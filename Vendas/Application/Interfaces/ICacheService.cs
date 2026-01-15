@@ -1,4 +1,4 @@
-﻿namespace infrastructure.CacheStorage
+﻿namespace Application.Interfaces
 {
     public interface ICacheService
     {

@@ -1,6 +1,6 @@
-﻿
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using Application.Interfaces;
 
 namespace infrastructure.CacheStorage
 {
