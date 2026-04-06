@@ -55,7 +55,7 @@ namespace API.Extensions
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Serviço Estoque v1");
+                    c.SwaggerEndpoint("v1/swagger.json", "Serviço Estoque v1");
                     c.DocumentTitle = "Serviço Estoque";
                 });
             }
