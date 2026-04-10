@@ -1,7 +1,9 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Vendas.Extensions;
 
 
@@ -19,8 +21,18 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerDocumentation();
-builder.Services.AddAuthenticationJwt(builder.Configuration);
+builder.Services.AddSwaggerDocumentation(builder.Configuration);
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "http://localhost:8080/realms/estoque-vendas";
+        options.RequireHttpsMetadata = false;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false
+        };
+    });
 builder.Services.AddMessaging();
 builder.Services.AddRedisCache();
 #endregion
@@ -29,7 +41,6 @@ builder.Services.AddRedisCache();
 
 #region AppSettings
 var app = builder.Build();
-app.UseHttpsRedirection();
 app.UseRouting();
 app.ApplyMigrations();
 app.UseSwaggerDocumentation(app.Environment);
@@ -37,11 +48,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 #endregion
-
-
-
-
-
 
 #region TesteDatabaseConnection
 app.MapGet("/Teste", async (VendasDBContext dbContext) =>

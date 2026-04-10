@@ -17,32 +17,6 @@ namespace Vendas.Extensions
             db.Database.Migrate();
         }
 
-        public static IServiceCollection AddAuthenticationJwt(
-        this IServiceCollection services, IConfiguration configuration)
-        {
-            var jwtSettings = configuration.GetSection("JwtSettings");
-
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-
-                        ValidIssuer = jwtSettings["Issuer"],
-                        ValidAudience = jwtSettings["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
-                        ),
-                        RoleClaimType = ClaimTypes.Role
-                    };
-                });
-
-            return services;
-        }
         public static IServiceCollection AddMessaging(
         this IServiceCollection services)
         {

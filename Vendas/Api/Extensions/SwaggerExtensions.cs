@@ -1,45 +1,58 @@
 ﻿using Microsoft.OpenApi.Models;
 
+
 namespace Vendas.Extensions
 {
     public static class SwaggerExtensions
     {
-        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Serviço Vendas",
-                    Version = "v1",
-                    Description = "API para gerenciamento de Vendas e Pedidos"
-                });
+                c.CustomSchemaIds(id => id.FullName!.Replace('+', '-'));
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+                    c.AddServer(new OpenApiServer
+                    {
+                        Url = "http://localhost:8000/estoque"
+                    });
+                
+
+                c.AddSecurityDefinition("Keycloak", new OpenApiSecurityScheme
                 {
-                    Description = "Insira o token JWT desta forma: Bearer {seu token}",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    BearerFormat = "JWT"
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri(configuration["Keycloak:AuthorizationUrl"]!),
+                            TokenUrl = new Uri(configuration["Keycloak:TokenUrl"]!),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"openid", "openid"},
+                                {"profile", "profile"}
+                            }
+                        }
+                    }
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                         new OpenApiSecurityScheme
-                         {
-                             Reference = new OpenApiReference
-                             {
+                        new OpenApiSecurityScheme
+                        {
+                           Reference = new OpenApiReference
+                           {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                             }
-                         },
-                         Array.Empty<string>()
+                                Id = "Keycloak"
+                           }
+                        },
+                            Array.Empty<string>()
                     }
                 });
+
             });
+
             return services;
         }
 
@@ -52,12 +65,20 @@ namespace Vendas.Extensions
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("v1/swagger.json", "Serviço Vendas v1");
+                    c.SwaggerEndpoint("/vendas/swagger/v1/swagger.json", "Serviço Vendas v1");
                     c.DocumentTitle = "Serviço Vendas";
+
+                    c.OAuthClientId("api-backend-estoque-vendas");
+                    c.OAuthUsePkce();
+                    c.OAuthScopes("openid", "profile");
                 });
             }
+
             return app;
         }
 
     }
+
+
+
 }
