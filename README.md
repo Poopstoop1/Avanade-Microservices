@@ -77,6 +77,7 @@ API Gateway: Usar um gateway para centralizar o acesso à API, garantindo que as
   - `Entity Framework Core`: ORM utilizado para facilitar o mapeamento objeto-relacional e abstrair interações com o banco de dados.
   - `EF Core Tools & EF Core Design`: Ferramentas usadas para gerenciar migrações, scaffolding, design-time e outras funcionalidades do Entity Framework.
   - `MediatR`: Biblioteca utilizada para implementar o padrão CQRS, promovendo desacoplamento entre camadas e facilitando manutenção e testes.
+  
 
 - **Banco de Dados**:
 
@@ -84,16 +85,15 @@ API Gateway: Usar um gateway para centralizar o acesso à API, garantindo que as
 
 - **Mensageria**:
 
-  - `RabbitMQ 3.13`: Utilizado como broker de mensagens para comunicação assíncrona entre os microserviços, garantindo desacoplamento, resiliência e processamento orientado a eventos.
+ - `RabbitMQ 3.13`: Utilizado como broker de mensagens para comunicação assíncrona entre os microserviços, garantindo desacoplamento, resiliência e processamento orientado a eventos.
 
 - **Authenticação e Segurança**
-
-  - `JWT Bearer Authentication`: Utilizado para autenticação e autorização baseada em tokens de forma segura e escalável.
-  - `PasswordHasher`: Recomendado pela Microsoft, É Utilizado para realizar o hashing seguro das senhas de usuários, seguindo boas práticas de segurança adotadas pelo ASP.NET Core Identity.
-
+- 
+- `Keycloak`: Sistema de gerenciamento de identidade e acesso, utilizado para autenticação e autorização centralizada.
+- 
 - **API Gateway**
 
-  - `YARP (Reverse Proxy)`: Utilizado no API Gateway para roteamento e agregação de chamadas aos microserviços.
+  - `Kong`: API Gateway utilizado para roteamento e agregação de chamadas aos microserviços.
 
 - **Logs & Monitoramento** ** Em progresso **
 
@@ -195,7 +195,7 @@ graph TB
 ### Fluxo de Comunicação
 
 ** Usuarios(Clientes)** → Autentica via **API Gateway**
-** API Gateway(Yarp)** → Roteia requisições para microserviços
+** API Gateway(Kong)** → Roteia requisições para microserviços
 ** Comunicação assíncrona** Comunicação Assíncrona entre serviços via RabbitMQ
 
 1️⃣ Fluxo: Criação do Pedido
@@ -245,11 +245,11 @@ Atualiza o estoque final (baixa definitiva)
 ### API Gateway
 
 - **Responsabilidade**: Ponto de entrada único, autenticação, roteamento
-- **Porta**: 5035
+- **Porta**: 8000
 - **Funcionalidades**:
   Autenticação JWT
   Crud de Usuarios
-  Roteamento via YARP
+  Roteamento via Kong
   Swagger UI
   Swagger com multiplos documentos
 
@@ -290,58 +290,22 @@ Após a execução, verifique se os serviços estão rodando:
 
 | Serviço                 | URL                                                               | Status |
 | ----------------------- | ----------------------------------------------------------------- | ------ |
-| **Gateway**             | http://localhost:5038/swagger                                     | ✅     |
-| **Gateway**             | http://localhost:5038/swagger/index.html?urls.primaryName=Vendas  | ✅     |
-| **Gateway**             | http://localhost:5038/swagger/index.html?urls.primaryName=Estoque | ✅     |
+| **Gateway**             | http://localhost:8000/swagger                                     | ✅     |
+| **Gateway**             | http://localhost:8000/estoque/swagger/                            | ✅     |
+| **Gateway**             | http://localhost:8000/vendas/swagger/                             | ✅     |
 | **Estoque Service**     | http://localhost:5285/swagger                                     | ✅     |
 | **Vendas Service**      | http://localhost:5156/swagger                                     | ✅     |
 | **RabbitMQ Management** | http://localhost:15672                                            | ✅     |
+| **Keycloak**            | http://localhost:8080                                             | ✅     |
 
 **Credenciais:**
 
 - **RabbitMQ**: `guest` / `guest`
-
+- **Keycloak**: `admin` / `admin`
 ---
 
-<a id="api-endpoints"></a>
 
-## 6. API Endpoints {#api-endpoints}
-
-### Autenticação
-
-Pelo Swagger do Gateway você consegue registrar e fazer login e receber o token para acessar outras rotas
-
-#### POST `/api/usuarios/login`
-
-```json
-{
-  "email": "admin@hotmail.com",
-  "password": "admin123"
-}
-```
-
-**Resposta:**
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
-
-#### POST `/api/usuarios/register`
-
-```json
-{
-  "name": "string",
-  "email": "string@hotmail.com",
-  "role": "user",
-  "password": "string"
-}
-```
-
-<a id="rabbitmq"></a>
-
-## 7. RabbitMQ
+## 6. RabbitMQ
 
 ### Configuração
 

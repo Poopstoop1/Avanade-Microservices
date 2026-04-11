@@ -1,0 +1,16 @@
+_format_version: "3.0"
+
+services:
+  - name: vendas-service
+    url: http://host.docker.internal:5156
+    routes:
+      - name: vendas-route
+        paths:
+          - /vendas
+
+  - name: estoque-service
+    url: http://host.docker.internal:5285
+    routes:
+      - name: estoque-route
+        paths:
+          - /estoque

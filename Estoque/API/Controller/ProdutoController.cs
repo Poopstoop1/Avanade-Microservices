@@ -9,7 +9,7 @@ namespace API.Controller
 {
     [ApiController]
     [Route("api/produtos")]
-    [Authorize()]
+    [Authorize]
     public class ProdutoController(IMediator mediator, ILogger<ProdutoController> logger) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
@@ -34,6 +34,7 @@ namespace API.Controller
                 
         }
         [HttpGet]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllProducts()
         {
             try
@@ -51,7 +52,7 @@ namespace API.Controller
         }
         // Fim da Query
 
-
+        [Authorize(Roles = "ADMIN")]
         // Command
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] ProdutoInputDTO produto)
@@ -76,6 +77,7 @@ namespace API.Controller
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> UpdateProduto(Guid id, [FromBody] ProdutoInputDTO produto)
         {
             var command = new UpdateProduct
